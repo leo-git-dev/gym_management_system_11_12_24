@@ -1,0 +1,5 @@
+payment_id,member_id,member_name,gym_id,gym_name,amount,date,status
+1,1,Joe Bloggs,1,Default Gym,100.0,2024-01-01,Paid
+P2,1,Default Member,1,Default City,124.00,2024-03-12,Paid
+P3,2,Lloyd Fake,2,London,350.00,2024-12-01,Paid
+P4,2,Lloyd Fake,2,London,450.00,2024-04-12,Paid

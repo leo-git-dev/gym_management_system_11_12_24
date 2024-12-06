@@ -1,0 +1,3 @@
+attendance_id,member_id,class_id,date,time,workout_zone,equipment_used,location_id
+1,1,1,2024-01-01,10:00,General,None,Unknown
+2,1,1,2024-12-01,12:30,Cardio,None,

@@ -1,0 +1,21 @@
+[
+    {
+        "location_id": "1",
+        "city": "London",
+        "zones": [
+            "Yoga",
+            "Pilates",
+            "Zumba",
+            "Weight Training"
+        ]
+    },
+    {
+        "location_id": "2",
+        "city": "Teddington",
+        "zones": [
+            "Weight Training",
+            "Running Track",
+            "Swiming Pool"
+        ]
+    }
+]

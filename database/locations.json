@@ -1,0 +1,16 @@
+[
+    {
+        "location_id": "1",
+        "city": "Default City",
+        "zones": [
+            "General"
+        ]
+    },
+    {
+        "location_id": "2",
+        "city": "London",
+        "zones": [
+            "Boxing Arena"
+        ]
+    }
+]

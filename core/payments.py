@@ -79,6 +79,24 @@ class PaymentManager:
         DataLoader.save_data("payments", updated_payments)
         print(f"Payment ID {payment_id} deleted successfully.")
 
+    @staticmethod
+    def get_payments_by_member_id(member_id):
+        """
+        Retrieve all payment records for a specific member by their Member ID.
+        :param member_id: The Member ID to search for.
+        :return: A list of payment records for the given Member ID.
+        """
+        try:
+            payments = DataLoader.get_data("payments")  # Assuming payments are stored in a JSON file or database
+            # Filter payments by Member ID
+            return [payment for payment in payments if payment["member_id"] == member_id]
+        except Exception as e:
+            print(f"Error fetching payments for Member ID {member_id}: {e}")
+            return []
+
+
+
+
 '''
 
 from utils.helpers import generate_unique_id

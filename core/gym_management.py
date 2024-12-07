@@ -82,31 +82,18 @@ class GymManager:
         print("Gym deletion process completed.")
 
     @staticmethod
-    def view_zones():
-        gyms = DataLoader.get_data("gyms")
-        if not gyms:
-            print("No gyms available.")
-            return
-
-        # Display available gyms
-        print("Available Gyms:")
-        for gym in gyms:
-            print(f"ID: {gym['gym_id']} - Name: {gym['gym_name']}")
-
-        # Prompt user to select a gym
-        gym_id = input("Enter Gym ID to view zones: ")
-
+    def view_zones(gym_id):
+        """
+        Returns the zones for a given gym.
+        :param gym_id: The ID of the gym to view zones for.
+        :return: List of zones for the gym.
+        """
         locations = DataLoader.get_data("locations")
         location = next((loc for loc in locations if loc["location_id"] == gym_id), None)
         if not location:
-            print(f"Gym ID {gym_id} not found in locations.")
-            return
+            raise ValueError(f"Gym ID {gym_id} not found in locations.")
 
-        zones = location.get("zones", [])
-        if zones:
-            print(f"Zones at Gym ID {gym_id}: {', '.join(zones)}")
-        else:
-            print(f"No zones available at Gym ID {gym_id}.")
+        return location.get("zones", [])
 
     @staticmethod
     def delete_zone(gym_id, zone_name):
@@ -123,30 +110,19 @@ class GymManager:
         print(f"Zone {zone_name} deleted successfully from Gym ID {gym_id}.")
 
     @staticmethod
-    def add_zone():
-        gyms = DataLoader.get_data("gyms")
-        if not gyms:
-            print("No gyms available.")
-            return
-
-        # Display available gyms
-        print("Available Gyms:")
-        for gym in gyms:
-            print(f"ID: {gym['gym_id']} - Name: {gym['gym_name']}")
-
-        # Prompt user to select a gym
-        gym_id = input("Enter Gym ID to add a zone: ")
-
+    def add_zone(gym_id, zone_name):
+        """
+        Adds a new zone to a gym.
+        :param gym_id: The ID of the gym where the zone will be added.
+        :param zone_name: The name of the zone to be added.
+        """
         locations = DataLoader.get_data("locations")
         location = next((loc for loc in locations if loc["location_id"] == gym_id), None)
         if not location:
-            print(f"Gym ID {gym_id} not found.")
-            return
+            raise ValueError(f"Gym ID {gym_id} not found.")
 
-        zone_name = input("Enter Zone Name: ")
         if zone_name in location.get("zones", []):
-            print(f"Zone {zone_name} already exists at Gym ID {gym_id}.")
-            return
+            raise ValueError(f"Zone {zone_name} already exists at Gym ID {gym_id}.")
 
         location.setdefault("zones", []).append(zone_name)
         DataLoader.save_data("locations", locations)

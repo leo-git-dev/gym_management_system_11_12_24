@@ -1,19 +1,39 @@
 import csv
 import json
 import os
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class DataLoader:
-    # Define the base directory for the database files
-    base_dir = os.path.join("../st_marys_fitness", "database")
+    base_dir = os.path.join("../gym_management_system", "database")
 
-    # Data source definitions
     data_sources = {
-        "members": {"file": os.path.join(base_dir, "members.csv"), "type": "csv"},
-        "payments": {"file": os.path.join(base_dir, "payments.csv"), "type": "csv"},
+        "members": {
+            "file": os.path.join(base_dir, "members.csv"),
+            "type": "csv",
+            "headers": [
+                "member_id", "name", "user_type", "membership_type", "join_date", "gym_id", "gym_name",
+                "role", "activities", "schedule", "cost", "activity", "expertise"
+            ]
+        },
+        "payments": {
+            "file": os.path.join(base_dir, "payments.csv"),
+            "type": "csv",
+            "headers": ["payment_id", "member_id", "member_name", "gym_id", "gym_name", "amount", "date", "status"]
+        },
         "appointments": {"file": os.path.join(base_dir, "appointments.json"), "type": "json"},
-        "attendance": {"file": os.path.join(base_dir, "attendance.csv"), "type": "csv"},
-        "gyms": {"file": "database/gyms.csv", "type": "csv"},
-        "locations": {"file": "database/locations.json", "type": "json"}  # Added this
+        "attendance": {
+            "file": os.path.join(base_dir, "attendance.csv"),
+            "type": "csv",
+            "headers": ["attendance_id", "member_id", "class_id", "date", "time", "workout_zone", "equipment_used"]
+        },
+        "gyms": {"file": os.path.join(base_dir, "gyms.csv"), "type": "csv", "headers": ["gym_id", "gym_name", "city"]},
+        "locations": {"file": os.path.join(base_dir, "locations.json"), "type": "json"},
+        "classes": {"file": os.path.join(base_dir, "classes.json"), "type": "json"},
+        "staff_roles": {"file": os.path.join(base_dir, "staff_roles.json"), "type": "json"}
     }
 
     @staticmethod
@@ -22,37 +42,62 @@ class DataLoader:
         source = DataLoader.data_sources.get(source_name)
         if not source:
             raise ValueError(f"Data source {source_name} not found.")
-        try:
-            if source["type"] == "csv":
-                with open(source["file"], "r") as f:
-                    return list(csv.DictReader(f))
-            elif source["type"] == "json":
-                with open(source["file"], "r") as f:
-                    return json.load(f)
-            else:
-                raise ValueError(f"Unsupported data type for source {source_name}.")
-        except FileNotFoundError:
-            print(f"File not found: {source['file']}")
-            return []  # Return an empty list if the file doesn't exist
+
+        file_path = source["file"]
+        if not os.path.exists(file_path):
+            DataLoader._initialize_file(source)
+
+        if source["type"] == "csv":
+            with open(file_path, "r") as f:
+                data = list(csv.DictReader(f))
+            return DataLoader._normalize_data(data, source["headers"])
+        elif source["type"] == "json":
+            with open(file_path, "r") as f:
+                return json.load(f)
 
     @staticmethod
     def save_data(source_name, data):
-        if source_name not in DataLoader.data_sources:
+        """Save data to the specified source."""
+        source = DataLoader.data_sources.get(source_name)
+        if not source:
             raise ValueError(f"Data source {source_name} not found.")
 
-        source = DataLoader.data_sources[source_name]
         file_path = source["file"]
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
         if source["type"] == "csv":
             with open(file_path, "w", newline="") as f:
-                # Dynamically determine the fieldnames from the first item in data
-                fieldnames = data[0].keys() if data else []
-                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                headers = source["headers"]
+                if data:
+                    extra_headers = set(data[0].keys()) - set(headers)
+                    headers += list(extra_headers)
+                writer = csv.DictWriter(f, fieldnames=headers)
                 writer.writeheader()
                 writer.writerows(data)
-                print(f"Data saved to {file_path} successfully.")
-
         elif source["type"] == "json":
             with open(file_path, "w") as f:
                 json.dump(data, f, indent=4)
-                print(f"Data saved to {file_path} successfully.")
+
+    @staticmethod
+    def _initialize_file(source):
+        """Initialize a new data file with headers or an empty structure."""
+        file_path = source["file"]
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        if source["type"] == "csv":
+            with open(file_path, "w", newline="") as f:
+                if headers := source.get("headers"):
+                    writer = csv.writer(f)
+                    writer.writerow(headers)
+        elif source["type"] == "json":
+            with open(file_path, "w") as f:
+                json.dump([], f)
+        logger.info(f"Initialized {source['type']} file: {file_path}")
+
+    @staticmethod
+    def _normalize_data(data, headers):
+        """Normalize data to ensure all required fields are present."""
+        for row in data:
+            for header in headers:
+                if header not in row:
+                    row[header] = ""  # Assign default value
+        return data

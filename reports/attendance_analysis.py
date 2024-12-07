@@ -36,7 +36,7 @@ class AttendanceAnalysis:
         plt.ylabel("Attendance Count")
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig("../st_marys_fitness/reports/attendance_report.png")
+        plt.savefig("../gym_management_system/reports/attendance_report.png")
         plt.show()
 
         print("Attendance analysis report generated and saved as 'attendance_report.png'.")

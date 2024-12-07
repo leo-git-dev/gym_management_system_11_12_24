@@ -1,12 +1,6 @@
 member_id,name,user_type,membership_type,join_date,gym_id,gym_name,role,activities,schedule,cost,activity,expertise,gym_location
 4,Johnny Apple,Wellbeing Staff,,,1,St Marys Twickenham,,,"{'day_year': 'Wednesday 2025', 'start_time': '11:00', 'end_time': '16:30'}",4500,Physiotherapy,,
-7,Jimmy Jones,Gym User,Trial,,1,St Marys Twickenham,,,{},10,,,
-8,Joe Roach,Gym User,Standard,,1,St Marys Twickenham,,,{},200,,,
 9,Luna WIlde,Management Staff,N/A,,1,St Marys Twickenham,Cleaning,,{},2500,,,
-10,I dont Know,Training Staff,N/A,,1,St Marys Twickenham,,Tai-Chi,{'Friday': '07:00 - 08:00'},4000,,General,
-11,I1 dont Know,Wellbeing Staff,N/A,,1,St Marys Twickenham,,Nutrition,{'Wednesday': '12:00 - 15:00'},4500,,,
-13,kkkh,Gym User,Trial,2024-12-07,1,St Marys Twickenham,,,,10,,,
-14,Jane,Training Staff,N/A,N/A,1,St Marys Twickenham,,,{'Monday 09:00-10:00': 'Scheduled'},4000,,Yoga,
 15,lion,Wellbeing Staff,N/A,N/A,2,St Mary Fitness Teddington,,,{'Friday 09:00-16:00': 'Scheduled'},4500,General,,
 16,george,Management Staff,N/A,N/A,2,St Mary Fitness Teddington,Cleaning,,,2500,,,
 17,Jonny,Training Staff,N/A,N/A,2,St Mary Fitness Teddington,,,{'Thursday 10:00-17:00': 'Scheduled'},4000,,Boxing,

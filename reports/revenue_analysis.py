@@ -37,7 +37,7 @@ class RevenueAnalysis:
         plt.ylabel("Total Revenue ($)")
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig("../st_marys_fitness/reports/revenue_report.png")
+        plt.savefig("../gym_management_system/reports/revenue_report.png")
         plt.show()
 
         print("Revenue analysis report generated and saved as 'revenue_report.png'.")

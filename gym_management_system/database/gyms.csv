@@ -1,4 +1,7 @@
-gym_id,gym_name,city,manager_email,manager_contact,Manager,manager_name
-1,St Marys Twickenham,London,jlamb@isi.fake.com,07659921134,Jackson Lamb,Jackson Lamb
-2,St Mary Fitness Teddington,Teddington,onering@fake.com,07853345567,,Bruce Baggins
-3,kjhhfgdfg,wales,,,,dr gt
+gym_id,gym_name,city,manager_contact,manager_email,manager_name,Manager
+1,St Marys Twickenham,London,07659921134,jlamb@isi.fake.com,Jackson Lamb,Jackson Lamb
+2,St Mary Fitness Teddington,Teddington,07853345567,onering@fake.com,Bruce Baggins,
+3,St Mary's Kingston,wales,,,dr gt,
+4,St Mary's Richmond,London,07890765543,lfake@fakemail.com,Leo Faker,
+5,St Mary's Ham,London,07898865434,joanahello@fakemail.com,Joanna Hello,
+6,St Mary's Ealing,London,07866543254,ealingb@fakemail.com,Ealing Brums,

@@ -40,14 +40,31 @@ class GymManager:
 
     @staticmethod
     def update_gym(gym_id, field, new_value):
+        """
+        Update a specific field for a gym in the database.
+
+        :param gym_id: The ID of the gym to update.
+        :param field: The field to update (e.g., "gym_name", "manager_name").
+        :param new_value: The new value for the field.
+        :raises ValueError: If the gym is not found or the field is invalid.
+        """
         gyms = DataLoader.get_data("gyms")
-        for gym in gyms:
-            if gym["gym_id"] == gym_id:
-                gym[field] = new_value
-                DataLoader.save_data("gyms", gyms)
-                print(f"{field} updated successfully for Gym ID {gym_id}.")
-                return
-        print(f"Gym with ID {gym_id} not found.")
+
+        # Locate the gym by ID
+        gym = next((g for g in gyms if g["gym_id"] == gym_id), None)
+        if not gym:
+            raise ValueError(f"Gym with ID {gym_id} not found.")
+
+        # Validate the field exists in the gym data
+        if field not in gym:
+            raise ValueError(f"Invalid field: {field}.")
+
+        # Update the field
+        gym[field] = new_value
+
+        # Save the updated gyms list back to the database
+        DataLoader.save_data("gyms", gyms)
+        print(f"Gym ID {gym_id} updated: {field} -> {new_value}")
 
     @staticmethod
     def delete_gym(gym_id):
@@ -176,6 +193,7 @@ class GymManager:
                 "gym_name": gym["gym_name"],
                 "manager_name": gym["manager_name"],
                 "manager_contact": gym["manager_contact"],
+                "manager_email": gym["manager_email"],
                 "zones": zones,
                 "city": city,
                 "total_members": total_members,

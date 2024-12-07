@@ -24,5 +24,25 @@
         "zones": [
             "Swimming Pool"
         ]
+    },
+    {
+        "location_id": "4",
+        "city": "London",
+        "zones": []
+    },
+    {
+        "location_id": "5",
+        "city": "London",
+        "zones": [
+            "Boxing",
+            "Running Track"
+        ]
+    },
+    {
+        "location_id": "6",
+        "city": "London",
+        "zones": [
+            "Boxing"
+        ]
     }
 ]

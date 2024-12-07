@@ -94,7 +94,32 @@ class PaymentManager:
             print(f"Error fetching payments for Member ID {member_id}: {e}")
             return []
 
+    @staticmethod
+    def calculate_total_membership_value(gym_id, status):
+        """
+        Calculate the total membership value for gym users in a given gym by payment status.
+        :param gym_id: The ID of the gym.
+        :param status: The payment status to filter by (e.g., "Paid", "Pending").
+        :return: Total membership value as a float.
+        """
+        members = DataLoader.get_data("members")
+        payments = DataLoader.get_data("payments")
 
+        # Filter gym users belonging to the gym
+        gym_user_ids = {
+            member["member_id"]
+            for member in members
+            if member["gym_id"] == gym_id and member["user_type"] == "Gym User"
+        }
+
+        # Calculate the total for payments with the given status
+        total = sum(
+            float(payment["amount"])
+            for payment in payments
+            if payment["status"] == status and payment["member_id"] in gym_user_ids
+        )
+
+        return total
 
 
 '''

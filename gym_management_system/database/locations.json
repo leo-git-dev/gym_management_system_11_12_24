@@ -17,5 +17,12 @@
             "Running Track",
             "Swiming Pool"
         ]
+    },
+    {
+        "location_id": "3",
+        "city": "wales",
+        "zones": [
+            "Swimming Pool"
+        ]
     }
 ]

@@ -2,3 +2,7 @@ payment_id,member_id,member_name,gym_id,gym_name,amount,date,status
 P2,2,Johnny Cash Morrison,,St Mary Fitness Teddington,350.00,2024-12-06,Pending
 P3,2,Johnny Cash Morrison,,St Mary Fitness Teddington,450.00,2024-12-02,Paid
 P4,3,Nino Joseph,,St Marys Twickenham,350.00,2024-12-06,Paid
+P5,18,johnny,,St Marys Twickenham,200.00,2024-12-06,Paid
+P6,18,johnny,,St Marys Twickenham,200.00,2025-01-18,Paid
+P7,19,Loory,,St Marys Twickenham,320.00,2024-12-12,Paid
+P8,19,Loory,,St Marys Twickenham,320.00,2024-12-12,Paid

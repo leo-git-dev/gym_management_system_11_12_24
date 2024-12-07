@@ -24,5 +24,15 @@
         "zones": [
             "Swimming Pool"
         ]
+    },
+    {
+        "location_id": "4",
+        "city": "London",
+        "zones": []
+    },
+    {
+        "location_id": "5",
+        "city": "London",
+        "zones": []
     }
 ]

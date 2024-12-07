@@ -176,6 +176,7 @@ class GymManager:
                 "gym_name": gym["gym_name"],
                 "manager_name": gym["manager_name"],
                 "manager_contact": gym["manager_contact"],
+                "manager_email": gym["manager_email"],
                 "zones": zones,
                 "city": city,
                 "total_members": total_members,

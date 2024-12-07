@@ -202,3 +202,46 @@ class MemberManagement:
         }
         return membership_costs.get(membership_type, 0)
 
+
+    @staticmethod
+    def count_users_by_gym(gym_id):
+        """
+        Count the total number of gym users for a specific gym.
+        :param gym_id: The ID of the gym.
+        :return: Total number of gym users for the gym.
+        """
+        members = DataLoader.get_data("members")  # Load all members from the database
+        return sum(1 for member in members if member["gym_id"] == gym_id and member["user_type"] == "Gym User")
+
+    @staticmethod
+    def count_staff_by_gym(gym_id, staff_type):
+        """
+        Count the total number of staff and their associated costs by type for a specific gym.
+        :param gym_id: The gym ID.
+        :param staff_type: The type of staff ("Wellbeing", "Training", or "Management").
+        :return: A dictionary with 'count' and 'cost'.
+        """
+        members = DataLoader.get_data("members")
+        staff = [
+            member for member in members
+            if member["gym_id"] == gym_id and member["user_type"] == f"{staff_type} Staff"
+        ]
+        total_cost = sum(member.get("cost", 0) for member in staff)
+        return {"count": len(staff), "cost": total_cost}
+
+    @staticmethod
+    def calculate_staff_totals_by_gym(gym_id):
+        members = DataLoader.get_data("members")
+        staff_totals = {
+            "Wellbeing Staff": {"count": 0, "cost": 0.0},
+            "Training Staff": {"count": 0, "cost": 0.0},
+            "Management Staff": {"count": 0, "cost": 0.0},
+        }
+
+        for member in members:
+            if member["gym_id"] == gym_id and member["user_type"] in staff_totals:
+                user_type = member["user_type"]
+                staff_totals[user_type]["count"] += 1
+                staff_totals[user_type]["cost"] += float(member.get("cost", 0))
+
+        return staff_totals

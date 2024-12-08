@@ -478,63 +478,194 @@ class UserManagementApp:
 
 ######### HERE WE CREATE THE SEARCH GYM USER MENU FUNCTION ###############
 
-
     def create_search_user_menu(self):
         """
-        Search users by ID or Name.
+        Create the Search User menu to find and display user information by name.
         """
         self.clear_root_widgets()
 
+        # Main Frame
         frame = ttk.Frame(self.root)
         frame.grid(sticky="nsew")
         frame.grid_columnconfigure(0, weight=1)
         frame.grid_columnconfigure(1, weight=1)
         frame.grid_rowconfigure(3, weight=1)
 
-        ttk.Label(frame, text="Search User", font=("Helvetica", 14)).grid(row=0, column=0, columnspan=2, pady=10)
+        ttk.Label(frame, text="Search User by Name", font=("Helvetica", 14)).grid(
+            row=0, column=0, columnspan=2, pady=10
+        )
 
-        ttk.Label(frame, text="Member ID:").grid(row=1, column=0, padx=5, pady=5, sticky="e")
-        search_id_entry = ttk.Entry(frame)
-        search_id_entry.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+        # Dropdown for user type
+        ttk.Label(frame, text="User Type:").grid(row=1, column=0, padx=5, pady=5, sticky="e")
+        self.user_type_dropdown = ttk.Combobox(
+            frame, values=["Gym User", "Training Staff", "Wellbeing Staff", "Management Staff"], state="readonly"
+        )
+        self.user_type_dropdown.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+        self.user_type_dropdown.set("Select User Type")
 
+        # Dropdown for user name
         ttk.Label(frame, text="Name:").grid(row=2, column=0, padx=5, pady=5, sticky="e")
-        search_name_entry = ttk.Entry(frame)
-        search_name_entry.grid(row=2, column=1, padx=5, pady=5, sticky="w")
+        self.name_dropdown = ttk.Combobox(frame, state="readonly")
+        self.name_dropdown.grid(row=2, column=1, padx=5, pady=5, sticky="w")
+        self.name_dropdown.set("Select Name")
 
-        results_box = tk.Text(frame, wrap="word", height=15)
-        results_box.grid(row=3, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
+        # Update name dropdown on user type selection
+        self.user_type_dropdown.bind("<<ComboboxSelected>>", self.on_user_type_selected)
 
+        # Scrollable frame for results
+        result_frame = ttk.Frame(frame)
+        result_frame.grid(row=3, column=0, columnspan=2, padx=5, pady=5, sticky="nsew")
+        result_frame.grid_rowconfigure(0, weight=1)
+        result_frame.grid_columnconfigure(0, weight=1)
+
+        canvas = tk.Canvas(result_frame)
+        canvas.grid(row=0, column=0, sticky="nsew")
+
+        scroll_y = ttk.Scrollbar(result_frame, orient="vertical", command=canvas.yview)
+        scroll_y.grid(row=0, column=1, sticky="ns")
+
+        self.result_inner_frame = ttk.Frame(canvas)
+        canvas.create_window((0, 0), window=self.result_inner_frame, anchor="nw")
+        self.result_inner_frame.bind(
+            "<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+        canvas.configure(yscrollcommand=scroll_y.set)
+
+        # Search Button
         ttk.Button(
             frame,
             text="Search",
-            command=lambda: self.search_user(
-                search_id_entry.get(),
-                search_name_entry.get(),
-                results_box
-            )
+            command=lambda: self.search_user_by_name(
+                self.user_type_dropdown.get(),
+                self.name_dropdown.get(),
+                self.result_inner_frame,
+            ),
         ).grid(row=4, column=0, columnspan=2, pady=10)
 
         self.add_back_button(frame)
 
-    def search_user(self, member_id, name, results_box):
+    def on_user_type_selected(self, event):
         """
-        Search for a user by Member ID or Name and display the results.
+        Update the Name dropdown based on the selected User Type.
+        """
+        user_type = self.user_type_dropdown.get()
+        names = self.get_names_by_user_type(user_type)
+        self.name_dropdown["values"] = names
+        self.name_dropdown.set("Select Name")
+
+    def get_names_by_user_type(self, user_type):
+        """
+        Retrieve names of users filtered by user type.
         """
         try:
-            results_box.delete("1.0", tk.END)  # Clear the results box
-            if not member_id and not name:
-                results_box.insert(tk.END, "Please provide at least Member ID or Name to search.")
+            users = MemberManagement.view_all_members()  # Fetch all members from the database
+            return [u["name"] for u in users if u["user_type"] == user_type]  # Filter by user type
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to fetch names: {e}")
+            return []
+
+    def search_user_by_name(self, user_type, name, result_frame):
+        """
+        Search for a user by name and display the results in a vertical format.
+        """
+        try:
+            # Clear previous results
+            for widget in result_frame.winfo_children():
+                widget.destroy()
+
+            if not user_type or user_type == "Select User Type":
+                raise ValueError("Please select a valid user type.")
+            if not name or name == "Select Name":
+                raise ValueError("Please select a name to search.")
+
+            # Fetch user details
+            users = MemberManagement.view_all_members()
+            user = next((u for u in users if u["name"] == name and u["user_type"] == user_type), None)
+
+            if not user:
+                ttk.Label(result_frame, text="No matching user found.", font=("Helvetica", 12)).pack(pady=10)
                 return
 
-            user = MemberManagement.search_member(member_id=member_id, name=name)
-            if user:
-                results_box.insert(tk.END, f"Member Found:\n{user}\n")
+            # Fetch city from gym data if missing in user data
+            if not user.get("city"):
+                gym_data = GymManager.view_all_gyms()
+                gym = next((g for g in gym_data if g["gym_id"] == user["gym_id"]), None)
+                user["city"] = gym["city"] if gym else "Unknown"
+
+            # Handle `schedule` field safely
+            schedule = user.get("schedule")
+            formatted_schedule = self.format_schedule(schedule) if isinstance(schedule,
+                                                                              dict) else "No schedule available."
+
+            # Get additional data (e.g., attendance for Gym User)
+            if user_type == "Gym User":
+                attendance = self.get_total_attendance(user["member_id"])
+                details = [
+                    ("ID", user["member_id"]),
+                    ("Name", user["name"]),
+                    ("User Type", user["user_type"]),
+                    ("Gym Name", user.get("gym_name", "Unknown")),
+                    ("City", user.get("city", "Unknown")),
+                    ("Membership Type", user.get("membership_type", "Unknown")),
+                    ("Membership Cost", f"${float(user.get('cost', 0)):.2f}"),
+                    ("Join Date", user.get("join_date", "Unknown")),
+                    ("Total Attendance", attendance),
+                ]
+            elif user_type in ["Training Staff", "Wellbeing Staff"]:
+                details = [
+                    ("ID", user["member_id"]),
+                    ("Name", user["name"]),
+                    ("User Type", user["user_type"]),
+                    ("Gym Name", user.get("gym_name", "Unknown")),
+                    ("City", user.get("city", "Unknown")),
+                    ("Cost", f"${float(user.get('cost', 0)):.2f}"),
+                    ("Schedule", formatted_schedule),
+                ]
+            elif user_type == "Management Staff":
+                details = [
+                    ("ID", user["member_id"]),
+                    ("Name", user["name"]),
+                    ("User Type", user["user_type"]),
+                    ("Gym Name", user.get("gym_name", "Unknown")),
+                    ("City", user.get("city", "Unknown")),
+                    ("Role", user.get("role", "Unknown")),
+                    ("Cost", f"${float(user.get('cost', 0)):.2f}"),
+                ]
             else:
-                results_box.insert(tk.END, "No matching user found.")
+                raise ValueError("Unsupported user type.")
+
+            # Display details
+            for field, value in details:
+                ttk.Label(result_frame, text=field, font=("Helvetica", 10, "bold")).pack(anchor="w", pady=2)
+                ttk.Label(result_frame, text=value, font=("Helvetica", 10)).pack(anchor="w", padx=10)
+
+        except ValueError as ve:
+            messagebox.showwarning("Validation Error", str(ve))
         except Exception as e:
             messagebox.showerror("Error", f"Failed to search user: {e}")
 
-######### HERE WE CREATE THE UPDATE GYM USER DATA MENU FUNCTION ###############
+    def format_schedule(self, schedule):
+        """
+        Format schedule into a readable string.
+        """
+        if not schedule or not isinstance(schedule, dict):
+            return "No schedule available."
+        formatted = []
+        for day, times in schedule.items():
+            formatted.append(f"{day}: {times}")
+        return "\n".join(formatted)
+
+    def get_total_attendance(self, member_id):
+        """
+        Retrieve total attendance for a Gym User.
+        """
+        try:
+            from core.attendance_tracking import AttendanceManager
+            return AttendanceManager.get_attendance_count(member_id)
+        except Exception:
+            return "N/A"
+
+    ######### HERE WE CREATE THE UPDATE GYM USER DATA MENU FUNCTION ###############
 
     def update_user(self, member_id=None, name=None, field=None, new_value=None):
         """
@@ -703,6 +834,8 @@ class UserManagementApp:
             command=lambda: self.delete_user_and_return(name=self.member_name_dropdown.get())
         ).grid(row=3, column=0, columnspan=2, pady=10)
 
+        self.add_back_button(frame)
+
     def delete_user_and_return(self, name=None):
         """
         Delete a user from the database and navigate back to the main menu.
@@ -747,7 +880,6 @@ class UserManagementApp:
         for row, (field, value) in enumerate(user.items(), start=1):
             ttk.Label(self.details_frame, text=field).grid(row=row, column=0, padx=5, pady=5, sticky="w")
             ttk.Label(self.details_frame, text=value).grid(row=row, column=1, padx=5, pady=5, sticky="w")
-
 
 if __name__ == "__main__":
     root = tk.Tk()

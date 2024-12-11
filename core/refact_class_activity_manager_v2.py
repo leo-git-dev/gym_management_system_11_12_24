@@ -1,5 +1,3 @@
-# core/class_activity_tk_manager.py
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 from core.class_activity_manager import ClassActivityManager
@@ -27,22 +25,22 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class ClassManagementApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Class Management")
+class ClassManagementApp(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        # Removed self.root.title(...) since we now use a Frame as parent
         self.create_widgets()
 
     def create_widgets(self):
         # Tabs
-        notebook = ttk.Notebook(self.root)
-        notebook.pack(expand=True, fill="both")
+        self.notebook = ttk.Notebook(self)
+        self.notebook.pack(expand=True, fill="both")
 
-        self.add_tab = ttk.Frame(notebook)
-        self.view_tab = ttk.Frame(notebook)
+        self.add_tab = ttk.Frame(self.notebook)
+        self.view_tab = ttk.Frame(self.notebook)
 
-        notebook.add(self.add_tab, text="Add Class")
-        notebook.add(self.view_tab, text="View/Manage Classes")
+        self.notebook.add(self.add_tab, text="Add Class")
+        self.notebook.add(self.view_tab, text="View/Manage Classes")
 
         self.create_add_tab()
         self.create_view_tab()
@@ -160,7 +158,6 @@ class ClassManagementApp:
         self.update_field_dropdown.set("Select Field")
 
         ttk.Label(manage_frame, text="New Value:").grid(row=2, column=0, padx=5, pady=5, sticky="e")
-        # Change Entry to Combobox for Trainer field to prevent format errors
         self.update_value_entry = ttk.Entry(manage_frame)
         self.update_value_entry.grid(row=2, column=1, padx=5, pady=5, sticky="w")
 
@@ -182,14 +179,11 @@ class ClassManagementApp:
         """
         Navigate back to the main menu. Placeholder for actual main menu implementation.
         """
-        # Implement navigation to the main menu as per your application's structure
         messagebox.showinfo("Info", "Return to main menu functionality to be implemented.")
 
     def get_gym_display_names(self):
         """
         Retrieve all gym names formatted with their IDs.
-
-        :return: List of formatted gym names.
         """
         gyms = GymManager.view_all_gyms()
         gym_display = [f"{gym['gym_name']} (ID: {gym['gym_id']})" for gym in gyms]
@@ -199,9 +193,6 @@ class ClassManagementApp:
     def get_training_staff_names(self, gym_id=None):
         """
         Retrieve all training staff names, optionally filtered by gym_id.
-
-        :param gym_id: ID of the gym to filter trainers. If None, retrieves all trainers.
-        :return: List of training staff names formatted with their IDs.
         """
         members = MemberManagement.view_all_members()
         training_staff = [m for m in members if m["user_type"] == "Training Staff"]
@@ -214,8 +205,6 @@ class ClassManagementApp:
     def get_class_display_names(self):
         """
         Retrieve all classes formatted with their IDs.
-
-        :return: List of formatted class names.
         """
         classes = ClassActivityManager.view_all_classes()
         class_display = [f"{cls['class_name']} (ID: {cls['class_id']})" for cls in classes]
@@ -244,7 +233,6 @@ class ClassManagementApp:
             logger.error("Invalid gym selection format.")
             return
 
-        # Retrieve trainers associated with the selected gym
         trainers = self.get_training_staff_names(gym_id)
         self.trainer_dropdown['values'] = trainers
         self.trainer_dropdown.set("Select Trainer")
@@ -260,13 +248,11 @@ class ClassManagementApp:
         """
         selected_trainer = self.trainer_dropdown.get()
         if not selected_trainer or selected_trainer == "Select Trainer":
-            # Clear the schedule tree if no trainer is selected
             for row in self.trainer_schedule_tree.get_children():
                 self.trainer_schedule_tree.delete(row)
             logger.debug("No trainer selected. Trainer schedule cleared.")
             return
 
-        # Extract trainer_id from selection
         try:
             trainer_id = selected_trainer.split("(ID: ")[1].rstrip(")")
         except IndexError:
@@ -274,16 +260,12 @@ class ClassManagementApp:
             logger.error("Invalid trainer selection format.")
             return
 
-        # Retrieve schedules
         schedules = ClassActivityManager.get_trainer_schedule(trainer_id)
 
-        # Clear existing entries
         for row in self.trainer_schedule_tree.get_children():
             self.trainer_schedule_tree.delete(row)
 
-        # Insert new schedules
         for sched in schedules:
-            # Format schedule for display
             try:
                 formatted_sched = self.format_schedule_for_display(sched)
                 self.trainer_schedule_tree.insert("", "end", values=(formatted_sched,))
@@ -295,9 +277,6 @@ class ClassManagementApp:
     def format_schedule_for_display(self, schedule_list):
         """
         Format the schedule list into a readable string.
-
-        :param schedule_list: List of schedule dictionaries.
-        :return: Formatted schedule string.
         """
         schedule_str = ""
         for sched in schedule_list:
@@ -311,22 +290,19 @@ class ClassManagementApp:
 
     def add_schedule_row(self):
         """
-        Add a new schedule entry row in the Add Class tab with day and time drop-downs.
+        Add a new schedule entry row in the Add Class tab.
         """
         row = len(self.schedule_entries)
-        # Day Combobox
         ttk.Label(self.additional_schedule_frame, text=f"Schedule {row + 1} Day:").grid(row=row, column=0, padx=5, pady=2, sticky="e")
         day_combobox = ttk.Combobox(self.additional_schedule_frame, values=DAYS_OF_WEEK, state="readonly")
         day_combobox.grid(row=row, column=1, padx=5, pady=2, sticky="w")
         day_combobox.set("Select Day")
 
-        # Time Combobox
         ttk.Label(self.additional_schedule_frame, text=f"Schedule {row + 1} Time:").grid(row=row, column=2, padx=5, pady=2, sticky="e")
         time_combobox = ttk.Combobox(self.additional_schedule_frame, values=TIME_SLOTS, state="readonly")
         time_combobox.grid(row=row, column=3, padx=5, pady=2, sticky="w")
         time_combobox.set("Select Time")
 
-        # Store the comboboxes for later retrieval
         self.schedule_entries.append((day_combobox, time_combobox))
         logger.debug(f"Added new schedule row: Day Combobox - {day_combobox}, Time Combobox - {time_combobox}")
 
@@ -339,7 +315,6 @@ class ClassManagementApp:
         selected_trainer = self.trainer_dropdown.get()
         capacity = self.capacity_entry.get().strip()
 
-        # Validate inputs
         if not class_name:
             messagebox.showwarning("Validation Error", "Please enter the class name.")
             logger.warning("Add Class failed: Class name is empty.")
@@ -357,7 +332,6 @@ class ClassManagementApp:
             logger.warning("Add Class failed: Invalid capacity entered.")
             return
 
-        # Extract gym_id and trainer_id
         try:
             gym_id = selected_gym.split("(ID: ")[1].rstrip(")")
             trainer_id = selected_trainer.split("(ID: ")[1].rstrip(")")
@@ -366,7 +340,6 @@ class ClassManagementApp:
             logger.error("Add Class failed: Invalid selection format for gym or trainer.")
             return
 
-        # Gather additional schedules
         additional_schedules = {}
         for day_cb, time_cb in self.schedule_entries:
             day = day_cb.get().strip()
@@ -376,7 +349,6 @@ class ClassManagementApp:
                     additional_schedules[day] = []
                 additional_schedules[day].append(time)
 
-        # Merge with existing trainer schedules to check for conflicts
         existing_schedules = ClassActivityManager.get_trainer_schedule(trainer_id)
         existing_schedule_times = []
         for sched in existing_schedules:
@@ -384,36 +356,29 @@ class ClassManagementApp:
                 logger.error(f"Expected schedule to be a dict, got {type(sched)} instead.")
                 continue
             for day, times in sched.items():
-                for time in times:
-                    existing_schedule_times.append(f"{day} {time}")
+                for t in times:
+                    existing_schedule_times.append(f"{day} {t}")
 
         logger.debug(f"Existing schedules for trainer '{trainer_id}': {existing_schedule_times}")
 
-        # Check for schedule conflicts
         for day, times in additional_schedules.items():
-            for time in times:
-                schedule_entry = f"{day} {time}"
+            for t in times:
+                schedule_entry = f"{day} {t}"
                 if schedule_entry in existing_schedule_times:
                     messagebox.showwarning("Validation Error", f"Schedule conflict detected: {schedule_entry}")
                     logger.warning(f"Add Class failed: Schedule conflict for {schedule_entry}")
                     return
 
-        # Final schedule to pass to ClassActivityManager
         final_schedule = additional_schedules
-
-        # Validate schedule format before passing
         try:
-            # Convert final_schedule to the expected format (dictionary)
             validated_schedule = ClassActivityManager.validate_schedule(final_schedule)
         except ValueError as ve:
             messagebox.showerror("Validation Error", str(ve))
             logger.error(f"Add Class failed during schedule validation: {ve}")
             return
 
-        # Convert capacity to integer
         capacity_int = int(capacity)
 
-        # Add class using ClassActivityManager
         try:
             class_id = ClassActivityManager.add_class(
                 class_name=class_name,
@@ -443,7 +408,6 @@ class ClassManagementApp:
             time_cb.set("Select Time")
         self.capacity_entry.delete(0, tk.END)
 
-        # Clear trainer schedule
         for row in self.trainer_schedule_tree.get_children():
             self.trainer_schedule_tree.delete(row)
         logger.debug("Add Class form cleared.")
@@ -473,7 +437,6 @@ class ClassManagementApp:
                     ),
                 )
             logger.info("Classes loaded into the view successfully.")
-            # Refresh the manage_class_dropdown after loading classes
             self.manage_class_dropdown['values'] = self.get_class_display_names()
             self.manage_class_dropdown.set("Select Class")
         except Exception as e:
@@ -483,9 +446,6 @@ class ClassManagementApp:
     def format_schedule(self, schedule_dict):
         """
         Format the schedule dictionary into a readable string.
-
-        :param schedule_dict: Dictionary containing schedules.
-        :return: Formatted schedule string.
         """
         if not isinstance(schedule_dict, dict):
             logger.error(f"Expected schedule to be a dict, got {type(schedule_dict)} instead.")
@@ -505,7 +465,6 @@ class ClassManagementApp:
         if not selected_class or selected_class == "Select Class":
             return
 
-        # Extract class_id
         try:
             class_id = selected_class.split("(ID: ")[1].rstrip(")")
         except IndexError:
@@ -513,7 +472,6 @@ class ClassManagementApp:
             logger.error("Populate Update Fields failed: Invalid class selection format.")
             return
 
-        # Fetch class details
         classes = ClassActivityManager.view_all_classes()
         cls = next((c for c in classes if c["class_id"] == class_id), None)
         if not cls:
@@ -521,20 +479,17 @@ class ClassManagementApp:
             logger.error(f"Populate Update Fields failed: Class ID {class_id} not found.")
             return
 
-        # Pre-populate the update_value_entry based on selected field
         selected_field = self.update_field_dropdown.get()
         if selected_field == "Trainer":
-            # Replace Entry with Combobox for Trainer selection
             trainers = self.get_training_staff_names(cls["gym_id"])
             trainer_display = f"{cls['trainer_name']} (ID: {cls['trainer_id']})"
-            self.update_value_entry.configure(state="disabled")  # Temporarily disable the Entry
+            self.update_value_entry.configure(state="disabled")
             trainer_combobox = ttk.Combobox(self.view_tab, values=trainers, state="readonly")
             trainer_combobox.set(trainer_display)
             trainer_combobox.grid(row=2, column=1, padx=5, pady=5, sticky="w")
-            self.update_value_entry = trainer_combobox  # Replace the entry with combobox
+            self.update_value_entry = trainer_combobox
         elif selected_field == "Schedule":
             self.update_value_entry.delete(0, tk.END)
-            # Convert schedule dict to string format for easy editing
             schedule_str = self.format_schedule(cls["schedule"])
             self.update_value_entry.insert(0, schedule_str)
         elif selected_field == "Capacity":
@@ -565,7 +520,6 @@ class ClassManagementApp:
             logger.warning("Update Class failed: New value is empty.")
             return
 
-        # Extract class_id
         try:
             class_id = selected_class.split("(ID: ")[1].rstrip(")")
         except IndexError:
@@ -575,7 +529,6 @@ class ClassManagementApp:
 
         updates = {}
         if field == "Trainer":
-            # Extract trainer_id
             try:
                 trainer_id = new_value.split("(ID: ")[1].rstrip(")")
                 updates["trainer_id"] = trainer_id
@@ -584,7 +537,6 @@ class ClassManagementApp:
                 logger.error("Update Class failed: Invalid trainer format.")
                 return
         elif field == "Schedule":
-            # Expecting a multi-line string with 'Day: time1, time2'
             try:
                 schedule_dict = {}
                 lines = new_value.split("\n")
@@ -593,9 +545,8 @@ class ClassManagementApp:
                         raise ValueError(f"Invalid schedule line format: '{line}'. Expected 'Day: time1, time2'.")
                     day_part, times_part = line.split(":")
                     day = day_part.strip()
-                    times = [time.strip() for time in times_part.split(",")]
+                    times = [t.strip() for t in times_part.split(",")]
                     schedule_dict[day] = times
-                # Validate schedule format
                 validated_schedule = ClassActivityManager.validate_schedule(schedule_dict)
                 updates["schedule"] = validated_schedule
             except Exception as e:
@@ -613,13 +564,11 @@ class ClassManagementApp:
             logger.error(f"Update Class failed: Field '{field}' cannot be updated.")
             return
 
-        # Confirm update
         confirm = messagebox.askyesno("Confirm Update", f"Are you sure you want to update the {field} of the selected class?")
         if not confirm:
             logger.info(f"Update Class operation canceled by user for class '{class_id}'.")
             return
 
-        # Perform update
         try:
             ClassActivityManager.update_class(class_id, updates)
             messagebox.showinfo("Success", "Class updated successfully.")
@@ -640,13 +589,11 @@ class ClassManagementApp:
             logger.warning("Delete Class failed: No class selected.")
             return
 
-        # Confirm deletion
         confirm = messagebox.askyesno("Confirm Deletion", "Are you sure you want to delete the selected class?")
         if not confirm:
             logger.info("Delete Class operation canceled by user.")
             return
 
-        # Extract class_id
         try:
             class_id = selected_class.split("(ID: ")[1].rstrip(")")
         except IndexError:
@@ -654,15 +601,12 @@ class ClassManagementApp:
             logger.error("Delete Class failed: Invalid class selection format.")
             return
 
-        # Perform deletion
         try:
             ClassActivityManager.delete_class(class_id)
             messagebox.showinfo("Success", "Class deleted successfully.")
             logger.info(f"Class '{class_id}' deleted successfully.")
             self.view_all_classes()
-            # Refresh class dropdown
             self.refresh_manage_class_dropdown()
-            # Clear update fields
             self.manage_class_dropdown.set("Select Class")
             self.update_field_dropdown.set("Select Field")
             self.update_value_entry.delete(0, tk.END)
@@ -682,13 +626,10 @@ class ClassManagementApp:
         except Exception as e:
             messagebox.showerror("Error", f"Failed to refresh class dropdown: {e}")
             logger.error(f"Failed to refresh class dropdown: {e}")
-
-def main():
+'''
+if __name__ == "__main__":
     root = tk.Tk()
     app = ClassManagementApp(root)
+    app.pack(expand=True, fill='both')
     root.mainloop()
-
-if __name__ == "__main__":
-    main()
-
-
+'''

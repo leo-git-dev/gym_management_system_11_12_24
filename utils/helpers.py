@@ -1,3 +1,20 @@
+import uuid
+
+def generate_unique_id(data, key):
+    """
+    Generate a unique ID based on existing data.
+
+    :param data: List of dictionaries containing existing data.
+    :param key: The key to check for uniqueness.
+    :return: A unique string ID.
+    """
+    existing_ids = {item[key] for item in data if key in item}
+    while True:
+        new_id = str(uuid.uuid4())[:8]  # Generate a short unique ID
+        if new_id not in existing_ids:
+            return new_id
+
+
 def validate_date(date_str):
     from datetime import datetime
     try:
@@ -9,7 +26,32 @@ def validate_date(date_str):
 def format_currency(amount):
     return f"${amount:,.2f}"
 
+'''
+def generate_unique_id(data_list, id_field, prefix='C'):
+    """
+    Generate a unique ID by incrementing the highest existing ID.
 
+    :param data_list: List of existing data dictionaries.
+    :param id_field: The field name containing the ID.
+    :param prefix: The prefix for the ID (e.g., 'C' for classes).
+    :return: An integer representing the new unique ID.
+    """
+    max_id = 0
+    for item in data_list:
+        current_id_str = item.get(id_field, "")
+        if current_id_str.startswith(prefix):
+            try:
+                # Strip the prefix and convert the remaining part to int
+                current_id = int(current_id_str[len(prefix):])
+                if current_id > max_id:
+                    max_id = current_id
+            except ValueError:
+                # Handle cases where the ID doesn't follow the expected format
+                continue
+    return max_id + 1
+'''
+
+'''
 def generate_unique_id(data, id_field):
     """
     Generate a unique ID based on existing records.
@@ -22,7 +64,7 @@ def generate_unique_id(data, id_field):
         return 1
     existing_ids = [int(item.get(id_field, 0)) for item in data if id_field in item]
     return max(existing_ids) + 1
-
+'''
 
 def generate_payment_id(payments, prefix="P"):
     """

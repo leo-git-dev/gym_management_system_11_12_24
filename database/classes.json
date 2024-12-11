@@ -1,0 +1,208 @@
+[
+    {
+        "class_id": "ce50dd9c",
+        "class_name": "Yoga Basics",
+        "trainer_id": "a3188a80",
+        "trainer_name": "Loas Jones",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "schedule": {
+            "Monday": [
+                "07:00-08:00",
+                "10:00-11:00"
+            ],
+            "Wednesday": [
+                "09:00-10:00",
+                "14:00-15:00"
+            ],
+            "Friday": [
+                "06:00-07:00",
+                "12:00-13:00"
+            ]
+        },
+        "capacity": 5,
+        "registered_users": [
+            {
+                "member_id": "U001",
+                "day": "Monday",
+                "time": "10:00-11:00"
+            },
+            {
+                "member_id": "U002",
+                "day": "Monday",
+                "time": "10:00-11:00"
+            },
+            {
+                "member_id": "U003",
+                "day": "Wednesday",
+                "time": "09:00-10:00"
+            }
+        ]
+    },
+    {
+        "class_id": "ce50dd9d",
+        "class_name": "Advanced Pilates",
+        "trainer_id": "a3188a81",
+        "trainer_name": "Sarah Connor",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "schedule": {
+            "Tuesday": [
+                "08:00-09:00",
+                "17:00-18:00"
+            ],
+            "Thursday": [
+                "11:00-12:00",
+                "16:00-17:00"
+            ]
+        },
+        "capacity": 10,
+        "registered_users": []
+    },
+    {
+        "class_id": "ce50dd9e",
+        "class_name": "HIIT Training",
+        "trainer_id": "a3188a82",
+        "trainer_name": "Mike Tyson",
+        "gym_id": "c5d3ca4c",
+        "gym_name": "Downtown Gym",
+        "schedule": {
+            "Monday": [
+                "18:00-19:00",
+                "20:00-21:00"
+            ],
+            "Wednesday": [
+                "06:00-07:00",
+                "19:00-20:00"
+            ]
+        },
+        "capacity": 8,
+        "registered_users": [
+            {
+                "member_id": "U004",
+                "day": "Monday",
+                "time": "18:00-19:00"
+            }
+        ]
+    },
+    {
+        "class_id": "01c8675f",
+        "class_name": "MMA",
+        "trainer_id": "a3188a80",
+        "trainer_name": "Loas Jones",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "schedule": {
+            "Tuesday": [
+                "09:00-10:00"
+            ]
+        },
+        "capacity": 10,
+        "registered_users": [
+            {
+                "member_id": "c55f0eeb",
+                "day": "Tuesday",
+                "time": "09:00-10:00"
+            },
+            {
+                "member_id": "8e94beeb",
+                "day": "Tuesday",
+                "time": "09:00-10:00"
+            }
+        ]
+    },
+    {
+        "class_id": "4d826b82",
+        "class_name": "Muay Thay",
+        "trainer_id": "a3188a80",
+        "trainer_name": "Loas Jones",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "schedule": {
+            "Tuesday": [
+                "13:00-14:00"
+            ],
+            "Saturday": [
+                "14:00-15:00"
+            ]
+        },
+        "capacity": 10,
+        "registered_users": [
+            {
+                "member_id": "3b5a6b77",
+                "day": "Saturday",
+                "time": "14:00-15:00"
+            },
+            {
+                "member_id": "2e4cfa59",
+                "day": "Saturday",
+                "time": "14:00-15:00"
+            }
+        ]
+    },
+    {
+        "class_id": "96d2d006",
+        "class_name": "Tai Chi",
+        "trainer_id": "a3188a80",
+        "trainer_name": "Loas Jones",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "schedule": {
+            "Wednesday": [
+                "10:00-11:00"
+            ],
+            "Saturday": [
+                "15:00-16:00"
+            ],
+            "Thursday": [
+                "09:00-10:00"
+            ]
+        },
+        "capacity": 10,
+        "registered_users": [
+            {
+                "member_id": "3b5a6b77",
+                "day": "Thursday",
+                "time": "09:00-10:00"
+            },
+            {
+                "member_id": "3b5a6b77",
+                "day": "Saturday",
+                "time": "15:00-16:00"
+            }
+        ]
+    },
+    {
+        "class_id": "5063890f",
+        "class_name": "Trial Race",
+        "trainer_id": "a3188a80",
+        "trainer_name": "Loas Jones",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "schedule": {
+            "Tuesday": [
+                "15:00-16:00"
+            ]
+        },
+        "capacity": 5,
+        "registered_users": []
+    },
+    {
+        "class_id": "d332a943",
+        "class_name": "Zumba",
+        "trainer_id": "a3188a80",
+        "trainer_name": "Loas Jones",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "schedule": {
+            "Tuesday": [
+                "06:00-07:00"
+            ],
+            "Friday": [
+                "14:00-15:00"
+            ]
+        },
+        "capacity": 10,
+        "registered_users": []
+    }
+]

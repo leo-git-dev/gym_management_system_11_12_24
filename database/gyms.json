@@ -1,0 +1,18 @@
+[
+    {
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "Wales",
+        "manager_name": "Leo B",
+        "manager_contact": "08896554321",
+        "manager_email": "pb@fakemail2.com"
+    },
+    {
+        "gym_id": "937b3f03",
+        "gym_name": "Trem2",
+        "city": "Wales",
+        "manager_name": "Trem Doido",
+        "manager_contact": "08756774352",
+        "manager_email": "tremdoido@fakemail.com"
+    }
+]

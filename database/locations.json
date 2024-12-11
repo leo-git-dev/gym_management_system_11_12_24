@@ -1,16 +1,17 @@
 [
     {
-        "location_id": "1",
-        "city": "Default City",
+        "location_id": "c5d3ca4b",
+        "city": "Wales",
         "zones": [
-            "General"
+            "Trem"
         ]
     },
     {
-        "location_id": "2",
-        "city": "London",
+        "location_id": "937b3f03",
+        "city": "Wales",
         "zones": [
-            "Boxing Arena"
+            "Zumba",
+            "MMA"
         ]
     }
 ]

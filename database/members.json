@@ -1,0 +1,203 @@
+[
+    {
+        "member_id": "a3188a80",
+        "name": "Loas Jones",
+        "user_type": "Training Staff",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "N/A",
+        "cost": 4000,
+        "join_date": "N/A",
+        "schedule": {
+            "Monday": [
+                {
+                    "start_time": "08:00",
+                    "end_time": "10:00"
+                }
+            ],
+            "Tuesday": [
+                {
+                    "start_time": "09:30",
+                    "end_time": "15:00"
+                }
+            ],
+            "Wednesday": [],
+            "Thursday": [],
+            "Friday": [],
+            "Saturday": [],
+            "Sunday": []
+        },
+        "activity": "N/A",
+        "expertise": "Zumba",
+        "role": "N/A"
+    },
+    {
+        "member_id": "c55f0eeb",
+        "name": "Jonah Jones",
+        "user_type": "Gym User",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "Premium",
+        "cost": 350,
+        "join_date": "2024-12-09",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "8f451748",
+        "name": "Dongard Tess",
+        "user_type": "Gym User",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "Premium",
+        "cost": 350,
+        "join_date": "2024-12-04",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "9554d789",
+        "name": "LLulu Lones",
+        "user_type": "Gym User",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "Premium",
+        "cost": 350,
+        "join_date": "2024-12-09",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "14804ca0",
+        "name": "PhysioGuy",
+        "user_type": "Wellbeing Staff",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "N/A",
+        "cost": 4500,
+        "join_date": "N/A",
+        "schedule": {
+            "Monday": [
+                {
+                    "start_time": "08:00",
+                    "end_time": "20:00"
+                }
+            ],
+            "Tuesday": [
+                {
+                    "start_time": "07:30",
+                    "end_time": "09:00"
+                }
+            ],
+            "Wednesday": [],
+            "Thursday": [],
+            "Friday": [],
+            "Saturday": [],
+            "Sunday": []
+        },
+        "activity": "Physiotherapy",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "8e94beeb",
+        "name": "Test Integral",
+        "user_type": "Gym User",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "Premium",
+        "cost": 350,
+        "join_date": "2024-12-09",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "2e4cfa59",
+        "name": "Test Integral",
+        "user_type": "Gym User",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "Standard",
+        "cost": 200,
+        "join_date": "2024-12-10",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "3b5a6b77",
+        "name": "Test Integral3",
+        "user_type": "Gym User",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "Standard",
+        "cost": 200,
+        "join_date": "2024-12-10",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "b37db60d",
+        "name": "Trass Oar",
+        "user_type": "Management Staff",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "N/A",
+        "cost": 2500,
+        "join_date": "N/A",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "Cafeteria"
+    },
+    {
+        "member_id": "0bdfc717",
+        "name": "Tessa Tazy",
+        "user_type": "Management Staff",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "N/A",
+        "cost": 2500,
+        "join_date": "2024-10-01",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "Cleaning"
+    },
+    {
+        "member_id": "ac59db2d",
+        "name": "Nameless",
+        "user_type": "Gym User",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "London",
+        "membership_type": "Weekender",
+        "cost": 80,
+        "join_date": "2024-12-10",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    }
+]

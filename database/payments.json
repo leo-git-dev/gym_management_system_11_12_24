@@ -1,0 +1,20 @@
+[
+    {
+        "payment_id": "P1",
+        "member_id": "8f451748",
+        "member_name": "Dongard Tess",
+        "gym_name": "St Mary's Richmond Hill",
+        "amount": "350.00",
+        "date": "2024-12-10",
+        "status": "Paid"
+    },
+    {
+        "payment_id": "P2",
+        "member_id": "3b5a6b77",
+        "member_name": "Test Integral3",
+        "gym_name": "St Mary's Richmond Hill",
+        "amount": "500.00",
+        "date": "2024-12-12",
+        "status": "Paid"
+    }
+]

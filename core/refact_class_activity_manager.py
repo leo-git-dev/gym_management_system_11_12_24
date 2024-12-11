@@ -1,4 +1,4 @@
-# core/class_activity_tk_manager.py
+# core/class_activity_management.py
 
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -7,6 +7,7 @@ from core.gym_management import GymManager
 from core.member_management import MemberManagement
 import logging
 import re
+from database.data_loader import DataLoader
 
 # Define constants for days and time slots
 DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -21,32 +22,47 @@ TIME_SLOTS = [
 
 # Configure logging
 logging.basicConfig(
-    filename='logs/class_activity_tk_manager.log',
+    filename='logs/class_activity_management.log',
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-class ClassManagementApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Class Management")
+class ClassManagementFrame(ttk.Frame):
+    def __init__(self, parent, data_loader:DataLoader):
+        super().__init__(parent)
+        self.parent = parent  # The Notebook or main application frame
         self.create_widgets()
 
     def create_widgets(self):
-        # Tabs
-        notebook = ttk.Notebook(self.root)
-        notebook.pack(expand=True, fill="both")
+        # Create Tabs within this frame
+        self.notebook = ttk.Notebook(self)
+        self.notebook.pack(expand=True, fill="both")
 
-        self.add_tab = ttk.Frame(notebook)
-        self.view_tab = ttk.Frame(notebook)
+        # Create Frames for Tabs
+        self.add_tab = ttk.Frame(self.notebook)
+        self.view_tab = ttk.Frame(self.notebook)
 
-        notebook.add(self.add_tab, text="Add Class")
-        notebook.add(self.view_tab, text="View/Manage Classes")
+        # Add Tabs to Notebook
+        self.notebook.add(self.add_tab, text="Add Class")
+        self.notebook.add(self.view_tab, text="View/Manage Classes")
 
+        # Initialize Tabs
         self.create_add_tab()
         self.create_view_tab()
 
+        # Bind tab change to update title if needed
+        # Uncomment and modify if you want to handle title updates
+        # self.notebook.bind("<<NotebookTabChanged>>", lambda e: self.update_title(self.notebook.tab(self.notebook.select(), "text")))
+
+    def update_title(self, title):
+        """Update window title with the current tab name."""
+        # Assuming the main application handles the window title,
+        # you might want to emit an event or call a callback instead.
+        # For now, we'll leave this method empty.
+        pass
+
+    # Add Class Tab
     def create_add_tab(self):
         """
         Create the Add Class tab with all required fields.
@@ -110,6 +126,7 @@ class ClassManagementApp:
         back_button = ttk.Button(self.add_tab, text="Back to Main Menu", command=self.create_main_menu)
         back_button.grid(row=8, column=0, columnspan=4, pady=5)
 
+    # View/Manage Classes Tab
     def create_view_tab(self):
         """
         Create the View/Manage Classes tab with all required functionalities.
@@ -191,10 +208,15 @@ class ClassManagementApp:
 
         :return: List of formatted gym names.
         """
-        gyms = GymManager.view_all_gyms()
-        gym_display = [f"{gym['gym_name']} (ID: {gym['gym_id']})" for gym in gyms]
-        logger.debug(f"Retrieved gym display names: {gym_display}")
-        return gym_display
+        try:
+            gyms = GymManager.view_all_gyms()
+            gym_display = [f"{gym['gym_name']} (ID: {gym['gym_id']})" for gym in gyms]
+            logger.debug(f"Retrieved gym display names: {gym_display}")
+            return gym_display
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load gyms: {e}")
+            logger.error(f"Failed to load gyms: {e}")
+            return []
 
     def get_training_staff_names(self, gym_id=None):
         """
@@ -203,13 +225,18 @@ class ClassManagementApp:
         :param gym_id: ID of the gym to filter trainers. If None, retrieves all trainers.
         :return: List of training staff names formatted with their IDs.
         """
-        members = MemberManagement.view_all_members()
-        training_staff = [m for m in members if m["user_type"] == "Training Staff"]
-        if gym_id:
-            training_staff = [m for m in training_staff if m["gym_id"] == gym_id]
-        trainers_display = [f"{staff['name']} (ID: {staff['member_id']})" for staff in training_staff]
-        logger.debug(f"Retrieved training staff names for gym '{gym_id}': {trainers_display}")
-        return trainers_display
+        try:
+            members = MemberManagement.view_all_members()
+            training_staff = [m for m in members if m["user_type"] == "Training Staff"]
+            if gym_id:
+                training_staff = [m for m in training_staff if m["gym_id"] == gym_id]
+            trainers_display = [f"{staff['name']} (ID: {staff['member_id']})" for staff in training_staff]
+            logger.debug(f"Retrieved training staff names for gym '{gym_id}': {trainers_display}")
+            return trainers_display
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load training staff: {e}")
+            logger.error(f"Failed to load training staff: {e}")
+            return []
 
     def get_class_display_names(self):
         """
@@ -217,10 +244,15 @@ class ClassManagementApp:
 
         :return: List of formatted class names.
         """
-        classes = ClassActivityManager.view_all_classes()
-        class_display = [f"{cls['class_name']} (ID: {cls['class_id']})" for cls in classes]
-        logger.debug(f"Retrieved class display names: {class_display}")
-        return class_display
+        try:
+            classes = ClassActivityManager.view_all_classes()
+            class_display = [f"{cls['class_name']} (ID: {cls['class_id']})" for cls in classes]
+            logger.debug(f"Retrieved class display names: {class_display}")
+            return class_display
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load classes: {e}")
+            logger.error(f"Failed to load classes: {e}")
+            return []
 
     def update_trainer_dropdown(self, event=None):
         """
@@ -245,14 +277,18 @@ class ClassManagementApp:
             return
 
         # Retrieve trainers associated with the selected gym
-        trainers = self.get_training_staff_names(gym_id)
-        self.trainer_dropdown['values'] = trainers
-        self.trainer_dropdown.set("Select Trainer")
-        logger.debug(f"Trainer dropdown updated for gym '{gym_id}': {trainers}")
+        try:
+            trainers = self.get_training_staff_names(gym_id)
+            self.trainer_dropdown['values'] = trainers
+            self.trainer_dropdown.set("Select Trainer")
+            logger.debug(f"Trainer dropdown updated for gym '{gym_id}': {trainers}")
 
-        # Clear trainer schedule
-        for row in self.trainer_schedule_tree.get_children():
-            self.trainer_schedule_tree.delete(row)
+            # Clear trainer schedule
+            for row in self.trainer_schedule_tree.get_children():
+                self.trainer_schedule_tree.delete(row)
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load trainers: {e}")
+            logger.error(f"Failed to load trainers: {e}")
 
     def update_trainer_schedule(self, event=None):
         """
@@ -275,22 +311,26 @@ class ClassManagementApp:
             return
 
         # Retrieve schedules
-        schedules = ClassActivityManager.get_trainer_schedule(trainer_id)
+        try:
+            schedules = ClassActivityManager.get_trainer_schedule(trainer_id)
 
-        # Clear existing entries
-        for row in self.trainer_schedule_tree.get_children():
-            self.trainer_schedule_tree.delete(row)
+            # Clear existing entries
+            for row in self.trainer_schedule_tree.get_children():
+                self.trainer_schedule_tree.delete(row)
 
-        # Insert new schedules
-        for sched in schedules:
-            # Format schedule for display
-            try:
-                formatted_sched = self.format_schedule_for_display(sched)
-                self.trainer_schedule_tree.insert("", "end", values=(formatted_sched,))
-            except Exception as e:
-                logger.error(f"Failed to format schedule for display: {e}")
-                continue
-        logger.debug(f"Trainer schedule updated for trainer '{trainer_id}': {schedules}")
+            # Insert new schedules
+            for sched in schedules:
+                # Format schedule for display
+                try:
+                    formatted_sched = self.format_schedule_for_display(sched)
+                    self.trainer_schedule_tree.insert("", "end", values=(formatted_sched,))
+                except Exception as e:
+                    logger.error(f"Failed to format schedule for display: {e}")
+                    continue
+            logger.debug(f"Trainer schedule updated for trainer '{trainer_id}': {schedules}")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load trainer schedule: {e}")
+            logger.error(f"Failed to load trainer schedule: {e}")
 
     def format_schedule_for_display(self, schedule_list):
         """
@@ -377,59 +417,63 @@ class ClassManagementApp:
                 additional_schedules[day].append(time)
 
         # Merge with existing trainer schedules to check for conflicts
-        existing_schedules = ClassActivityManager.get_trainer_schedule(trainer_id)
-        existing_schedule_times = []
-        for sched in existing_schedules:
-            if not isinstance(sched, dict):
-                logger.error(f"Expected schedule to be a dict, got {type(sched)} instead.")
-                continue
-            for day, times in sched.items():
+        try:
+            existing_schedules = ClassActivityManager.get_trainer_schedule(trainer_id)
+            existing_schedule_times = []
+            for sched in existing_schedules:
+                if not isinstance(sched, dict):
+                    logger.error(f"Expected schedule to be a dict, got {type(sched)} instead.")
+                    continue
+                for day, times in sched.items():
+                    for time in times:
+                        existing_schedule_times.append(f"{day} {time}")
+
+            logger.debug(f"Existing schedules for trainer '{trainer_id}': {existing_schedule_times}")
+
+            # Check for schedule conflicts
+            for day, times in additional_schedules.items():
                 for time in times:
-                    existing_schedule_times.append(f"{day} {time}")
+                    schedule_entry = f"{day} {time}"
+                    if schedule_entry in existing_schedule_times:
+                        messagebox.showwarning("Validation Error", f"Schedule conflict detected: {schedule_entry}")
+                        logger.warning(f"Add Class failed: Schedule conflict for {schedule_entry}")
+                        return
 
-        logger.debug(f"Existing schedules for trainer '{trainer_id}': {existing_schedule_times}")
+            # Final schedule to pass to ClassActivityManager
+            final_schedule = additional_schedules
 
-        # Check for schedule conflicts
-        for day, times in additional_schedules.items():
-            for time in times:
-                schedule_entry = f"{day} {time}"
-                if schedule_entry in existing_schedule_times:
-                    messagebox.showwarning("Validation Error", f"Schedule conflict detected: {schedule_entry}")
-                    logger.warning(f"Add Class failed: Schedule conflict for {schedule_entry}")
-                    return
+            # Validate schedule format before passing
+            try:
+                # Convert final_schedule to the expected format (dictionary)
+                validated_schedule = ClassActivityManager.validate_schedule(final_schedule)
+            except ValueError as ve:
+                messagebox.showerror("Validation Error", str(ve))
+                logger.error(f"Add Class failed during schedule validation: {ve}")
+                return
 
-        # Final schedule to pass to ClassActivityManager
-        final_schedule = additional_schedules
+            # Convert capacity to integer
+            capacity_int = int(capacity)
 
-        # Validate schedule format before passing
-        try:
-            # Convert final_schedule to the expected format (dictionary)
-            validated_schedule = ClassActivityManager.validate_schedule(final_schedule)
-        except ValueError as ve:
-            messagebox.showerror("Validation Error", str(ve))
-            logger.error(f"Add Class failed during schedule validation: {ve}")
-            return
-
-        # Convert capacity to integer
-        capacity_int = int(capacity)
-
-        # Add class using ClassActivityManager
-        try:
-            class_id = ClassActivityManager.add_class(
-                class_name=class_name,
-                trainer_id=trainer_id,
-                schedule=validated_schedule,
-                capacity=capacity_int,
-                gym_id=gym_id
-            )
-            messagebox.showinfo("Success", f"Class '{class_name}' added successfully with ID: {class_id}.")
-            logger.info(f"Class '{class_name}' added successfully with ID: {class_id}.")
-            self.clear_add_class_form()
-            self.view_all_classes()
-            self.refresh_manage_class_dropdown()
+            # Add class using ClassActivityManager
+            try:
+                class_id = ClassActivityManager.add_class(
+                    class_name=class_name,
+                    trainer_id=trainer_id,
+                    schedule=validated_schedule,
+                    capacity=capacity_int,
+                    gym_id=gym_id
+                )
+                messagebox.showinfo("Success", f"Class '{class_name}' added successfully with ID: {class_id}.")
+                logger.info(f"Class '{class_name}' added successfully with ID: {class_id}.")
+                self.clear_add_class_form()
+                self.view_all_classes()
+                self.refresh_manage_class_dropdown()
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to add class: {e}")
+                logger.error(f"Failed to add class '{class_name}': {e}")
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to add class: {e}")
-            logger.error(f"Failed to add class '{class_name}': {e}")
+            messagebox.showerror("Error", f"Failed to process class addition: {e}")
+            logger.error(f"Failed to process class addition: {e}")
 
     def clear_add_class_form(self):
         """
@@ -514,33 +558,46 @@ class ClassManagementApp:
             return
 
         # Fetch class details
-        classes = ClassActivityManager.view_all_classes()
-        cls = next((c for c in classes if c["class_id"] == class_id), None)
-        if not cls:
-            messagebox.showerror("Error", "Selected class not found.")
-            logger.error(f"Populate Update Fields failed: Class ID {class_id} not found.")
+        try:
+            classes = ClassActivityManager.view_all_classes()
+            cls = next((c for c in classes if c["class_id"] == class_id), None)
+            if not cls:
+                messagebox.showerror("Error", "Selected class not found.")
+                logger.error(f"Populate Update Fields failed: Class ID {class_id} not found.")
+                return
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to retrieve class details: {e}")
+            logger.error(f"Failed to retrieve class details for class ID {class_id}: {e}")
             return
 
         # Pre-populate the update_value_entry based on selected field
         selected_field = self.update_field_dropdown.get()
         if selected_field == "Trainer":
             # Replace Entry with Combobox for Trainer selection
-            trainers = self.get_training_staff_names(cls["gym_id"])
-            trainer_display = f"{cls['trainer_name']} (ID: {cls['trainer_id']})"
-            self.update_value_entry.configure(state="disabled")  # Temporarily disable the Entry
-            trainer_combobox = ttk.Combobox(self.view_tab, values=trainers, state="readonly")
-            trainer_combobox.set(trainer_display)
-            trainer_combobox.grid(row=2, column=1, padx=5, pady=5, sticky="w")
-            self.update_value_entry = trainer_combobox  # Replace the entry with combobox
+            try:
+                trainers = self.get_training_staff_names(cls["gym_id"])
+                trainer_display = f"{cls['trainer_name']} (ID: {cls['trainer_id']})"
+                self.update_value_entry.configure(state="disabled")  # Temporarily disable the Entry
+                trainer_combobox = ttk.Combobox(self.view_tab, values=trainers, state="readonly")
+                trainer_combobox.set(trainer_display)
+                trainer_combobox.grid(row=2, column=1, padx=5, pady=5, sticky="w")
+                self.update_value_entry = trainer_combobox  # Replace the entry with combobox
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to load trainers: {e}")
+                logger.error(f"Failed to load trainers for class ID {class_id}: {e}")
+                return
         elif selected_field == "Schedule":
+            self.update_value_entry.configure(state="normal")  # Ensure Entry is enabled
             self.update_value_entry.delete(0, tk.END)
             # Convert schedule dict to string format for easy editing
             schedule_str = self.format_schedule(cls["schedule"])
             self.update_value_entry.insert(0, schedule_str)
         elif selected_field == "Capacity":
+            self.update_value_entry.configure(state="normal")  # Ensure Entry is enabled
             self.update_value_entry.delete(0, tk.END)
             self.update_value_entry.insert(0, str(cls["capacity"]))
         else:
+            self.update_value_entry.configure(state="normal")  # Ensure Entry is enabled
             self.update_value_entry.delete(0, tk.END)
         logger.debug(f"Update fields populated for class '{class_id}'.")
 
@@ -600,7 +657,7 @@ class ClassManagementApp:
                 updates["schedule"] = validated_schedule
             except Exception as e:
                 messagebox.showerror("Error", f"Invalid schedule format: {e}")
-                logger.error(f"Update Class failed: {e}")
+                logger.error(f"Update Class failed during schedule validation: {e}")
                 return
         elif field == "Capacity":
             if not new_value.isdigit() or int(new_value) <= 0:
@@ -682,13 +739,3 @@ class ClassManagementApp:
         except Exception as e:
             messagebox.showerror("Error", f"Failed to refresh class dropdown: {e}")
             logger.error(f"Failed to refresh class dropdown: {e}")
-
-def main():
-    root = tk.Tk()
-    app = ClassManagementApp(root)
-    root.mainloop()
-
-if __name__ == "__main__":
-    main()
-
-

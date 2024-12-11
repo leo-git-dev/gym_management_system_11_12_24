@@ -1,5 +1,3 @@
-# core/gym_tk_manager.py
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 from core.gym_management import GymManager
@@ -13,15 +11,15 @@ def is_valid_zone_name(zone_name):
         return False
     return True
 
-class GymManagementApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Gym Management System")
+class GymManagementApp(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        # Removed self.root.title(...) since we now use a Frame as parent
         self.create_widgets()
 
     def create_widgets(self):
         # Create Notebook for Tabs
-        self.notebook = ttk.Notebook(self.root)
+        self.notebook = ttk.Notebook(self)
         self.notebook.pack(expand=True, fill="both")
 
         # Create Tabs
@@ -36,7 +34,7 @@ class GymManagementApp:
         self.notebook.add(self.update_tab, text="Update Gym")
         self.notebook.add(self.manage_zones_tab, text="Manage Zones")  # Corrected: Add the single frame
 
-        # Bind tab change to update title
+        # Bind tab change to update title (No self.root.title now, can be handled outside)
         self.notebook.bind("<<NotebookTabChanged>>", lambda e: self.update_title())
 
         # Initialize Tabs
@@ -46,8 +44,9 @@ class GymManagementApp:
         self.create_manage_zones_tab()
 
     def update_title(self):
-        current_tab = self.notebook.tab(self.notebook.select(), "text")
-        self.root.title(f"Gym Management System - {current_tab}")
+        # Since this is now a frame, we do not set a window title here.
+        # This can be handled by the main application if needed.
+        pass
 
     def create_add_gym_tab(self):
         """Create the Add Gym tab with input fields and a submission button."""
@@ -329,7 +328,6 @@ class GymManagementApp:
             if not new_value:
                 raise ValueError("Please enter a new value.")
 
-            # Retrieve gym ID
             gyms = GymManager.view_all_gyms()
             gym = next((g for g in gyms if g["gym_name"] == gym_name), None)
             if not gym:
@@ -337,7 +335,6 @@ class GymManagementApp:
 
             gym_id = gym["gym_id"]
 
-            # Update gym via GymManager
             GymManager.update_gym(gym_id, field, new_value)
             messagebox.showinfo("Success", f"Gym '{gym_name}' updated successfully.")
 
@@ -407,119 +404,46 @@ class GymManagementApp:
             messagebox.showerror("Error", f"Failed to retrieve gym names: {e}")
             return []
 
-    def create_manage_zones_tab(self):
-        """Create the Manage Zones tab with gym selection and zone operations."""
-        # Frame for Gym Selection
-        selection_frame = ttk.Frame(self.manage_zones_tab, padding=20)
-        selection_frame.pack(fill='x', expand=True)
-
-        gym_label = ttk.Label(selection_frame, text="Select Gym:")
-        gym_label.grid(row=0, column=0, sticky='w', pady=5)
-
-        self.manage_zones_gym_combobox = ttk.Combobox(selection_frame, state="readonly")
-        self.manage_zones_gym_combobox.grid(row=0, column=1, pady=5, sticky='ew')
-        self.manage_zones_gym_combobox.bind("<<ComboboxSelected>>", self.display_zones)
-
-        # Configure grid weights
-        selection_frame.columnconfigure(1, weight=1)
-
-        # Frame for Zones List
-        zones_frame = ttk.Frame(self.manage_zones_tab, padding=20)
-        zones_frame.pack(fill='both', expand=True)
-
-        # Treeview to display zones
-        self.zones_tree = ttk.Treeview(zones_frame, columns=("Zone Name",), show='headings', selectmode='browse')
-        self.zones_tree.heading("Zone Name", text="Zone Name")
-        self.zones_tree.column("Zone Name", anchor='center')
-        self.zones_tree.pack(fill='both', expand=True, side='left')
-
-        # Scrollbar for Treeview
-        scrollbar = ttk.Scrollbar(zones_frame, orient="vertical", command=self.zones_tree.yview)
-        self.zones_tree.configure(yscroll=scrollbar.set)
-        scrollbar.pack(fill='y', side='right')
-
-        # Frame for Zone Operations
-        operations_frame = ttk.Frame(self.manage_zones_tab, padding=20)
-        operations_frame.pack(fill='x', expand=True)
-
-        # Add Zone Section
-        add_label = ttk.Label(operations_frame, text="Zone Name:")
-        add_label.grid(row=0, column=0, sticky='w', pady=5)
-
-        self.add_zone_entry = ttk.Entry(operations_frame, width=20)
-        self.add_zone_entry.grid(row=0, column=1, pady=5, sticky='w')
-
-        add_zone_button = ttk.Button(operations_frame, text="Add Zone", command=self.add_zone_to_selected_gym)
-        add_zone_button.grid(row=0, column=2, padx=10, pady=5)
-
-        # Update Zone Section
-        update_label = ttk.Label(operations_frame, text="New Zone Name:")
-        update_label.grid(row=1, column=0, sticky='w', pady=5)
-
-        self.update_zone_entry = ttk.Entry(operations_frame, width=20)
-        self.update_zone_entry.grid(row=1, column=1, pady=5, sticky='w')
-
-        update_zone_button = ttk.Button(operations_frame, text="Update Selected Zone", command=self.update_zone)
-        update_zone_button.grid(row=1, column=2, padx=10, pady=5)
-
-        # Delete Zone Button
-        delete_zone_button = ttk.Button(operations_frame, text="Delete Selected Zone", command=self.delete_zone)
-        delete_zone_button.grid(row=2, column=2, padx=10, pady=5)
-
-        # Configure grid weights
-        operations_frame.columnconfigure(1, weight=1)
-
-        # Initialize zones_tree before refreshing the gym list
-        self.display_zones()
-
-        # Refresh Gym List after zones_tree is initialized
-        self.refresh_manage_zones_gym_list()
-
     def refresh_manage_zones_gym_list(self):
         """Refresh the list of gyms in the Manage Zones Combobox."""
         try:
             gyms = GymManager.view_all_gyms()
-            self.manage_zones_gyms = gyms  # Store gyms for easy access
+            self.manage_zones_gyms = gyms
             gym_names = [gym["gym_name"] for gym in gyms]
             self.manage_zones_gym_combobox['values'] = gym_names
             if gym_names:
                 self.manage_zones_gym_combobox.current(0)
                 self.display_zones()
             else:
-                self.manage_zones_gym_combobox.set('')  # Clear selection if no gyms are available
+                self.manage_zones_gym_combobox.set('')
                 self.zones_tree.delete(*self.zones_tree.get_children())
         except Exception as e:
             messagebox.showerror("Error", f"Failed to refresh gym list: {e}")
 
     def display_zones(self, event=None):
         """Display zones for the selected gym in the Treeview."""
+        if not hasattr(self, 'manage_zones_gyms'):
+            return
         selected_gym_name = self.manage_zones_gym_combobox.get().strip()
         if not selected_gym_name:
             return
 
-        # Retrieve gym_id based on gym_name
         selected_gym = next((gym for gym in self.manage_zones_gyms if gym["gym_name"] == selected_gym_name), None)
         if not selected_gym:
             messagebox.showerror("Selection Error", "Selected gym not found.")
             return
         gym_id = selected_gym["gym_id"]
 
-        # Retrieve zones for the gym
         zones = GymManager.view_zones(gym_id)
 
-        # Clear existing zones in the Treeview
         self.zones_tree.delete(*self.zones_tree.get_children())
-
-        # Insert zones into the Treeview
         for zone in zones:
             self.zones_tree.insert("", "end", values=(zone,))
 
     def add_zone_to_selected_gym(self):
-        """Handle adding a new zone to the selected gym."""
         selected_gym_name = self.manage_zones_gym_combobox.get().strip()
         new_zone = self.add_zone_entry.get().strip()
 
-        # Validation
         if not selected_gym_name:
             messagebox.showwarning("Input Error", "Please select a gym.")
             return
@@ -531,32 +455,28 @@ class GymManagementApp:
                                    "Zone name must be 3-30 characters long and contain only letters, numbers, and spaces.")
             return
 
-        # Confirmation Dialog
         confirm = messagebox.askyesno("Confirm Addition",
                                       f"Are you sure you want to add zone '{new_zone}' to '{selected_gym_name}'?")
         if not confirm:
             return
 
-        # Retrieve gym_id based on gym_name
         selected_gym = next((gym for gym in self.manage_zones_gyms if gym["gym_name"] == selected_gym_name), None)
         if not selected_gym:
             messagebox.showerror("Selection Error", "Selected gym not found.")
             return
         gym_id = selected_gym["gym_id"]
 
-        # Attempt to add the zone
         try:
             GymManager.add_zone(gym_id, new_zone)
             messagebox.showinfo("Success", f"Zone '{new_zone}' added to '{selected_gym_name}'.")
-            self.add_zone_entry.delete(0, tk.END)  # Clear the entry field
-            self.display_zones()  # Refresh the zones list
+            self.add_zone_entry.delete(0, tk.END)
+            self.display_zones()
         except ValueError as ve:
             messagebox.showerror("Error", str(ve))
         except Exception as e:
             messagebox.showerror("Error", f"An unexpected error occurred: {e}")
 
     def update_zone(self):
-        """Handle updating the selected zone."""
         selected_item = self.zones_tree.selection()
         if not selected_item:
             messagebox.showwarning("Selection Error", "Please select a zone to update.")
@@ -580,25 +500,22 @@ class GymManagementApp:
             return
         gym_id = selected_gym["gym_id"]
 
-        # Confirmation Dialog
         confirm = messagebox.askyesno("Confirm Update",
                                       f"Are you sure you want to rename zone '{old_zone_name}' to '{new_zone_name}'?")
         if not confirm:
             return
 
-        # Attempt to update the zone
         try:
             GymManager.update_zone(gym_id, old_zone_name, new_zone_name)
             messagebox.showinfo("Success", f"Zone '{old_zone_name}' updated to '{new_zone_name}'.")
-            self.update_zone_entry.delete(0, tk.END)  # Clear the entry field
-            self.display_zones()  # Refresh the zones list
+            self.update_zone_entry.delete(0, tk.END)
+            self.display_zones()
         except ValueError as ve:
             messagebox.showerror("Error", str(ve))
         except Exception as e:
             messagebox.showerror("Error", f"An unexpected error occurred: {e}")
 
     def delete_zone(self):
-        """Handle deleting the selected zone."""
         selected_item = self.zones_tree.selection()
         if not selected_item:
             messagebox.showwarning("Selection Error", "Please select a zone to delete.")
@@ -612,232 +529,24 @@ class GymManagementApp:
             return
         gym_id = selected_gym["gym_id"]
 
-        # Confirmation Dialog
         confirm = messagebox.askyesno("Confirm Deletion",
                                       f"Are you sure you want to delete zone '{zone_name}' from '{selected_gym_name}'?")
         if not confirm:
             return
 
-        # Attempt to delete the zone
         try:
             GymManager.delete_zone(gym_id, zone_name)
             messagebox.showinfo("Success", f"Zone '{zone_name}' deleted from '{selected_gym_name}'.")
-            self.display_zones()  # Refresh the zones list
+            self.display_zones()
         except ValueError as ve:
             messagebox.showerror("Error", str(ve))
         except Exception as e:
             messagebox.showerror("Error", f"An unexpected error occurred: {e}")
 
-    def display_zones(self, event=None):
-        """Display zones for the selected gym in the Treeview."""
-        selected_gym_name = self.manage_zones_gym_combobox.get().strip()
-        if not selected_gym_name:
-            return
-
-        # Retrieve gym_id based on gym_name
-        selected_gym = next((gym for gym in self.manage_zones_gyms if gym["gym_name"] == selected_gym_name), None)
-        if not selected_gym:
-            messagebox.showerror("Selection Error", "Selected gym not found.")
-            return
-        gym_id = selected_gym["gym_id"]
-
-        # Retrieve zones for the gym
-        zones = GymManager.view_zones(gym_id)
-
-        # Clear existing zones in the Treeview
-        self.zones_tree.delete(*self.zones_tree.get_children())
-
-        # Insert zones into the Treeview
-        for zone in zones:
-            self.zones_tree.insert("", "end", values=(zone,))
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = GymManagementApp(root)
-    root.mainloop()
-
-
-
-
-
 '''
-import tkinter as tk
-from tkinter import ttk, messagebox
-from core.gym_management import GymManager
-
-
-class GymManagementApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Gym Management")
-        self.create_widgets()
-
-    def create_widgets(self):
-        # Tabs
-        self.notebook = ttk.Notebook(self.root)
-        self.notebook.pack(expand=True, fill="both")
-
-        self.add_tab = ttk.Frame(self.notebook)
-        self.view_tab = ttk.Frame(self.notebook)
-        self.update_tab = ttk.Frame(self.notebook)
-        self.zone_tab = ttk.Frame(self.notebook)
-
-        self.notebook.add(self.add_tab, text="Add Gym")
-        self.notebook.add(self.view_tab, text="View All Gyms")
-        self.notebook.add(self.update_tab, text="Update Gym")
-        self.notebook.add(self.zone_tab, text="Manage Zones")
-
-        self.create_add_tab()
-        self.create_view_tab()
-        self.create_update_tab()
-        self.create_zone_tab()
-
-    def create_add_tab(self):
-        ttk.Label(self.add_tab, text="Gym Name:").grid(row=0, column=0, padx=5, pady=5)
-        self.gym_name_entry = ttk.Entry(self.add_tab)
-        self.gym_name_entry.grid(row=0, column=1, padx=5, pady=5)
-
-        ttk.Label(self.add_tab, text="City:").grid(row=1, column=0, padx=5, pady=5)
-        self.city_entry = ttk.Entry(self.add_tab)
-        self.city_entry.grid(row=1, column=1, padx=5, pady=5)
-
-        ttk.Label(self.add_tab, text="Manager Name:").grid(row=2, column=0, padx=5, pady=5)
-        self.manager_name_entry = ttk.Entry(self.add_tab)
-        self.manager_name_entry.grid(row=2, column=1, padx=5, pady=5)
-
-        ttk.Label(self.add_tab, text="Manager Contact:").grid(row=3, column=0, padx=5, pady=5)
-        self.manager_contact_entry = ttk.Entry(self.add_tab)
-        self.manager_contact_entry.grid(row=3, column=1, padx=5, pady=5)
-
-        ttk.Label(self.add_tab, text="Manager Email:").grid(row=4, column=0, padx=5, pady=5)
-        self.manager_email_entry = ttk.Entry(self.add_tab)
-        self.manager_email_entry.grid(row=4, column=1, padx=5, pady=5)
-
-        add_button = ttk.Button(self.add_tab, text="Add Gym", command=self.add_gym)
-        add_button.grid(row=5, column=0, columnspan=2, pady=10)
-
-    def create_view_tab(self):
-        self.gyms_tree = ttk.Treeview(self.view_tab, columns=("ID", "Name", "City", "Manager", "Contact"), show="headings")
-        self.gyms_tree.heading("ID", text="ID")
-        self.gyms_tree.heading("Name", text="Name")
-        self.gyms_tree.heading("City", text="City")
-        self.gyms_tree.heading("Manager", text="Manager")
-        self.gyms_tree.heading("Contact", text="Contact")
-        self.gyms_tree.pack(expand=True, fill="both", padx=5, pady=5)
-
-        view_button = ttk.Button(self.view_tab, text="Refresh", command=self.view_all_gyms)
-        view_button.pack(pady=10)
-
-    def create_update_tab(self):
-        ttk.Label(self.update_tab, text="Gym ID:").grid(row=0, column=0, padx=5, pady=5)
-        self.update_gym_id_entry = ttk.Entry(self.update_tab)
-        self.update_gym_id_entry.grid(row=0, column=1, padx=5, pady=5)
-
-        ttk.Label(self.update_tab, text="Field to Update:").grid(row=1, column=0, padx=5, pady=5)
-        self.update_field_entry = ttk.Combobox(self.update_tab, values=["gym_name", "city", "manager_name", "manager_contact", "manager_email"])
-        self.update_field_entry.grid(row=1, column=1, padx=5, pady=5)
-
-        ttk.Label(self.update_tab, text="New Value:").grid(row=2, column=0, padx=5, pady=5)
-        self.update_value_entry = ttk.Entry(self.update_tab)
-        self.update_value_entry.grid(row=2, column=1, padx=5, pady=5)
-
-        update_button = ttk.Button(self.update_tab, text="Update Gym", command=self.update_gym)
-        update_button.grid(row=3, column=0, columnspan=2, pady=10)
-
-    def create_zone_tab(self):
-        # Frame for tree view
-        self.zones_tree = ttk.Treeview(self.zone_tab, columns=("Name", "ID", "Zones"), show="headings")
-        self.zones_tree.heading("Name", text="Gym Name")
-        self.zones_tree.heading("ID", text="Gym ID")
-        self.zones_tree.heading("Zones", text="Zones")
-        self.zones_tree.pack(expand=True, fill="both", padx=5, pady=5)
-
-        # Frame for controls
-        controls_frame = ttk.Frame(self.zone_tab)
-        controls_frame.pack(fill="x", padx=5, pady=5)
-
-        ttk.Label(controls_frame, text="Gym ID:").pack(side="left", padx=5, pady=5)
-        self.zone_gym_id_entry = ttk.Entry(controls_frame)
-        self.zone_gym_id_entry.pack(side="left", padx=5, pady=5)
-
-        ttk.Label(controls_frame, text="Zone Name:").pack(side="left", padx=5, pady=5)
-        self.zone_name_entry = ttk.Entry(controls_frame)
-        self.zone_name_entry.pack(side="left", padx=5, pady=5)
-
-        add_zone_button = ttk.Button(controls_frame, text="Add Zone", command=self.add_zone)
-        add_zone_button.pack(side="left", padx=5, pady=5)
-
-        delete_zone_button = ttk.Button(controls_frame, text="Delete Zone", command=self.delete_zone)
-        delete_zone_button.pack(side="left", padx=5, pady=5)
-
-        refresh_button = ttk.Button(controls_frame, text="Refresh Zones", command=self.view_zones)
-        refresh_button.pack(side="left", padx=5, pady=5)
-
-    def add_gym(self):
-        name = self.gym_name_entry.get()
-        city = self.city_entry.get()
-        manager_name = self.manager_name_entry.get()
-        manager_contact = self.manager_contact_entry.get()
-        manager_email = self.manager_email_entry.get()
-
-        try:
-            GymManager.add_gym(name, city, manager_name, manager_contact, manager_email)
-            messagebox.showinfo("Success", "Gym added successfully.")
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to add gym: {e}")
-
-    def view_all_gyms(self):
-        gyms = GymManager.view_all_gyms()
-        for row in self.gyms_tree.get_children():
-            self.gyms_tree.delete(row)
-        for gym in gyms:
-            self.gyms_tree.insert("", "end", values=(gym["gym_id"], gym["gym_name"], gym["city"], gym["manager_name"], gym["manager_contact"]))
-
-    def update_gym(self):
-        gym_id = self.update_gym_id_entry.get()
-        field = self.update_field_entry.get()
-        new_value = self.update_value_entry.get()
-
-        try:
-            GymManager.update_gym(gym_id, field, new_value)
-            messagebox.showinfo("Success", "Gym updated successfully.")
-            self.view_all_gyms()
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to update gym: {e}")
-
-    def add_zone(self):
-        gym_id = self.zone_gym_id_entry.get()
-        zone_name = self.zone_name_entry.get()
-
-        try:
-            GymManager.add_zone(gym_id, zone_name)
-            messagebox.showinfo("Success", "Zone added successfully.")
-            self.view_zones()
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to add zone: {e}")
-
-    def delete_zone(self):
-        gym_id = self.zone_gym_id_entry.get()
-        zone_name = self.zone_name_entry.get()
-
-        try:
-            GymManager.delete_zone(gym_id, zone_name)
-            messagebox.showinfo("Success", "Zone deleted successfully.")
-            self.view_zones()
-        except Exception as e:
-            messagebox.showerror("Error", f"Failed to delete zone: {e}")
-
-    def view_zones(self):
-        gyms = GymManager.view_all_gyms()
-        for row in self.zones_tree.get_children():
-            self.zones_tree.delete(row)
-        for gym in gyms:
-            zones = ", ".join(gym["zones"]) if gym["zones"] else "No zones available"
-            self.zones_tree.insert("", "end", values=(gym["gym_name"], gym["gym_id"], zones))
-
-
 if __name__ == "__main__":
     root = tk.Tk()
     app = GymManagementApp(root)
+    app.pack(expand=True, fill='both')  # Now that it's a frame, pack it
     root.mainloop()
 '''

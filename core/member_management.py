@@ -1,5 +1,24 @@
 from utils.helpers import generate_unique_id
 from database.data_loader import DataLoader
+from core.gym_management import GymManager
+import os
+import logging
+
+# Ensure log directory exists
+log_directory = 'logs'
+if not os.path.exists(log_directory):
+    os.makedirs(log_directory)
+
+# Configure logging
+logging.basicConfig(
+    filename=os.path.join(log_directory, 'class_activity_manager.log'),
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+# Initialize logger
+logger = logging.getLogger(__name__)
+
 
 
 class MemberManagement:
@@ -30,6 +49,7 @@ class MemberManagement:
             "user_type": user_type,
             "gym_id": gym_id,
             "gym_name": gym["gym_name"],
+            "city": gym["city"],
             "membership_type": kwargs.get("membership_type", "N/A"),
             "cost": kwargs.get("cost", 0),
             "join_date": kwargs.get("join_date", "N/A"),
@@ -61,20 +81,42 @@ class MemberManagement:
     @staticmethod
     def validate_schedule(schedule):
         """
-        Validate the schedule format and ensure no overlapping entries.
-        :param schedule: Dictionary containing schedule details (day, start_time, end_time).
-        :return: Validated schedule.
+        Validate the new schedule format:
+        schedule = {
+          "Monday": [{"start_time": "07:00", "end_time": "10:30"}],
+          "Tuesday": [],
+          ...
+        }
         """
         if not isinstance(schedule, dict):
-            raise ValueError("Schedule must be a dictionary with day, start_time, and end_time slots.")
+            raise ValueError("Schedule must be a dictionary.")
 
-        validated_schedule = {}
-        for time_slot, activity in schedule.items():
-            if not isinstance(time_slot, str) or not isinstance(activity, str):
-                raise ValueError(f"Invalid schedule entry: {time_slot}, {activity}")
-            validated_schedule[time_slot] = activity
+        # Validate each day's intervals
+        for day, intervals in schedule.items():
+            if not isinstance(intervals, list):
+                raise ValueError(f"Expected a list of intervals for {day}.")
+            for interval in intervals:
+                if "start_time" not in interval or "end_time" not in interval:
+                    raise ValueError(f"Interval missing start_time or end_time for {day}.")
 
-        return validated_schedule
+                start = interval["start_time"]
+                end = interval["end_time"]
+
+                # Basic validation: ensure HH:MM format
+                if not (MemberManagement.is_valid_time_format(start) and MemberManagement.is_valid_time_format(end)):
+                    raise ValueError(f"Invalid time format in schedule for {day}: {start}-{end}.")
+
+                # Check times order
+                if end <= start:
+                    raise ValueError(f"End time must be later than start time for {day}: {start}-{end}")
+
+        return schedule
+
+    @staticmethod
+    def is_valid_time_format(t):
+        # Simple check for HH:MM format
+        import re
+        return bool(re.match(r"^\d{2}:\d{2}$", t))
 
     @staticmethod
     def delete_member_by_id(member_id):
@@ -117,9 +159,46 @@ class MemberManagement:
     def view_all_members():
         """
         Retrieve all members from the database.
-        :return: List of all members.
         """
-        return DataLoader.get_data("members")
+        members = DataLoader.get_data("members")
+        # Enrich members with gym_name based on gym_id
+        gyms = GymManager.view_all_gyms()
+        gym_dict = {gym["gym_id"]: gym["gym_name"] for gym in gyms}
+        for member in members:
+            member["gym_name"] = gym_dict.get(member.get("gym_id"), "Unknown")
+        return members
+
+    @staticmethod
+    def search_member_exact_case_insensitive(name):
+        """
+        Search for a member by exact name (case-insensitive).
+
+        :param name: The exact name of the member to search for.
+        :return: Member dictionary or None if not found.
+        """
+        members = DataLoader.get_data("members")
+        return next((m for m in members if m["name"].strip().lower() == name.strip().lower()), None)
+
+    @staticmethod
+    def get_member_by_id(member_id):
+        """
+        Retrieve member details by member_id.
+
+        :param member_id: ID of the member.
+        :return: Member dictionary or None.
+        """
+        try:
+            members = DataLoader.get_data("members")
+            member = next((m for m in members if m["member_id"] == member_id), None)
+            if member:
+                logger.debug(f"Member found: {member}")
+            else:
+                logger.debug(f"No member found with member_id: {member_id}")
+            return member
+        except Exception as e:
+            logger.error(f"Error retrieving member by ID '{member_id}': {e}")
+            raise
+
 
     @staticmethod
     def get_all_member_ids():

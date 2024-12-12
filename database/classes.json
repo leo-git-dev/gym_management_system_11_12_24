@@ -203,6 +203,30 @@
             ]
         },
         "capacity": 10,
+        "registered_users": [
+            {
+                "member_id": "ac59db2d",
+                "day": "Friday",
+                "time": "14:00-15:00"
+            }
+        ]
+    },
+    {
+        "class_id": "3ecdc6bf",
+        "class_name": "Fencing",
+        "trainer_id": "ad81be95",
+        "trainer_name": "Barbra O'Jones",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "schedule": {
+            "Wednesday": [
+                "12:00-13:00"
+            ],
+            "Thursday": [
+                "14:00-15:00"
+            ]
+        },
+        "capacity": 8,
         "registered_users": []
     }
 ]

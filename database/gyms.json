@@ -14,5 +14,21 @@
         "manager_name": "Trem Doido",
         "manager_contact": "08756774352",
         "manager_email": "tremdoido@fakemail.com"
+    },
+    {
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "city": "London",
+        "manager_name": "Lassy Lass",
+        "manager_contact": "08764432213",
+        "manager_email": "ll@fakemail.com"
+    },
+    {
+        "gym_id": "b65313d3",
+        "gym_name": "St Mary's Ham",
+        "city": "London",
+        "manager_name": "Hammer D",
+        "manager_contact": "08690087345",
+        "manager_email": "hd@fakemail.com"
     }
 ]

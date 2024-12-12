@@ -13,5 +13,17 @@
             "Zumba",
             "MMA"
         ]
+    },
+    {
+        "location_id": "6b65ee95",
+        "city": "London",
+        "zones": [
+            "Fencing"
+        ]
+    },
+    {
+        "location_id": "b65313d3",
+        "city": "London",
+        "zones": []
     }
 ]

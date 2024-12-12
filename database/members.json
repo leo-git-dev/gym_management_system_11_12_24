@@ -2,6 +2,8 @@
     {
         "member_id": "a3188a80",
         "name": "Loas Jones",
+        "username": "loas_jones",
+        "password": "loas123",
         "user_type": "Training Staff",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -35,6 +37,8 @@
     {
         "member_id": "c55f0eeb",
         "name": "Jonah Jones",
+        "username": "jonah_jones",
+        "password": "jonah123",
         "user_type": "Gym User",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -50,6 +54,8 @@
     {
         "member_id": "8f451748",
         "name": "Dongard Tess",
+        "username": "dongard_tess",
+        "password": "dongard123",
         "user_type": "Gym User",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -65,6 +71,8 @@
     {
         "member_id": "9554d789",
         "name": "LLulu Lones",
+        "username": "llulu_lones",
+        "password": "llulu123",
         "user_type": "Gym User",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -80,6 +88,8 @@
     {
         "member_id": "14804ca0",
         "name": "PhysioGuy",
+        "username": "physioguy",
+        "password": "physio123",
         "user_type": "Wellbeing Staff",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -113,6 +123,8 @@
     {
         "member_id": "8e94beeb",
         "name": "Test Integral",
+        "username": "test_integral",
+        "password": "test123",
         "user_type": "Gym User",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -128,6 +140,8 @@
     {
         "member_id": "2e4cfa59",
         "name": "Test Integral",
+        "username": "test_integral2",
+        "password": "test234",
         "user_type": "Gym User",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -143,6 +157,8 @@
     {
         "member_id": "3b5a6b77",
         "name": "Test Integral3",
+        "username": "test_integral3",
+        "password": "test345",
         "user_type": "Gym User",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -158,6 +174,8 @@
     {
         "member_id": "b37db60d",
         "name": "Trass Oar",
+        "username": "trass_oar",
+        "password": "trass123",
         "user_type": "Management Staff",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -173,6 +191,8 @@
     {
         "member_id": "0bdfc717",
         "name": "Tessa Tazy",
+        "username": "tessa_tazy",
+        "password": "tessa123",
         "user_type": "Management Staff",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -188,6 +208,8 @@
     {
         "member_id": "ac59db2d",
         "name": "Nameless",
+        "username": "nameless_user",
+        "password": "name123",
         "user_type": "Gym User",
         "gym_id": "c5d3ca4b",
         "gym_name": "St Mary's Richmond Hill",
@@ -195,6 +217,64 @@
         "membership_type": "Weekender",
         "cost": 80,
         "join_date": "2024-12-10",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "ad81be95",
+        "name": "Barbra O'Jones",
+        "user_type": "Training Staff",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "city": "London",
+        "membership_type": "N/A",
+        "cost": 4000,
+        "join_date": "N/A",
+        "schedule": {
+            "Monday": [
+                {
+                    "start_time": "08:00",
+                    "end_time": "17:00"
+                }
+            ],
+            "Tuesday": [],
+            "Wednesday": [],
+            "Thursday": [],
+            "Friday": [],
+            "Saturday": [],
+            "Sunday": []
+        },
+        "activity": "N/A",
+        "expertise": "Fencing",
+        "role": "N/A"
+    },
+    {
+        "member_id": "9d81749e",
+        "name": "Lorry Driver Guy",
+        "user_type": "Gym User",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "city": "London",
+        "membership_type": "Standard",
+        "cost": 200,
+        "join_date": "2024-12-09",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "fd8dcf58",
+        "name": "Guy from London",
+        "user_type": "Gym User",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "city": "London",
+        "membership_type": "Weekender",
+        "cost": 80,
+        "join_date": "2024-12-12",
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",

@@ -104,9 +104,9 @@ class ClassManagementApp(ttk.Frame):
         add_class_button = ttk.Button(self.add_tab, text="Add Class", command=self.add_class)
         add_class_button.grid(row=7, column=0, columnspan=4, pady=10)
 
-        # 1.8 Add Back Button to Return to Class Management Menu
-        back_button = ttk.Button(self.add_tab, text="Back to Main Menu", command=self.create_main_menu)
-        back_button.grid(row=8, column=0, columnspan=4, pady=5)
+        # 1.8 Add a Refresh Button to reload gyms and clear trainer schedule
+        refresh_button = ttk.Button(self.add_tab, text="Refresh", command=self.refresh_add_tab)
+        refresh_button.grid(row=8, column=0, columnspan=4, pady=5)
 
     def create_view_tab(self):
         """
@@ -168,12 +168,26 @@ class ClassManagementApp(ttk.Frame):
         delete_button = ttk.Button(manage_frame, text="Delete Class", command=self.delete_class)
         delete_button.grid(row=3, column=1, padx=5, pady=5)
 
-        # 2.6 Back Button to Main Menu
-        back_button = ttk.Button(self.view_tab, text="Back to Main Menu", command=self.create_main_menu)
-        back_button.pack(pady=5)
-
         # Load all classes initially
         self.view_all_classes()
+
+    def refresh_add_tab(self):
+        """
+        Refresh the Add Class tab: re-fetch gyms and clear trainer schedule.
+        """
+        self.gym_dropdown['values'] = self.get_gym_display_names()
+        self.gym_dropdown.set("Select Gym")
+        self.trainer_dropdown['values'] = []
+        self.trainer_dropdown.set("Select Trainer")
+        for row in self.trainer_schedule_tree.get_children():
+            self.trainer_schedule_tree.delete(row)
+        # Also clear schedules if needed
+        for day_cb, time_cb in self.schedule_entries:
+            day_cb.set("Select Day")
+            time_cb.set("Select Time")
+        self.class_name_entry.delete(0, tk.END)
+        self.capacity_entry.delete(0, tk.END)
+        messagebox.showinfo("Refreshed", "Add Class tab refreshed.")
 
     def create_main_menu(self):
         """

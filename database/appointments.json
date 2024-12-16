@@ -21,9 +21,27 @@
         "appointment_id": "cf88bfed",
         "member_id": "ac59db2d",
         "trainer_id": "14804ca0",
-        "date": "2024-12-11",
-        "time": "10:00",
+        "date": "2024-12-23",
+        "time": "16:00",
         "cost": 350,
         "status": "Paid"
+    },
+    {
+        "appointment_id": "02d1aea3",
+        "member_id": "9d81749e",
+        "trainer_id": "14804ca0",
+        "date": "2024-12-20",
+        "time": "09:30",
+        "cost": 350,
+        "status": "Pending"
+    },
+    {
+        "appointment_id": "d0046a51",
+        "member_id": "8e94beeb",
+        "trainer_id": "14804ca0",
+        "date": "2024-12-09",
+        "time": "09:30",
+        "cost": 350,
+        "status": "Pending"
     }
 ]

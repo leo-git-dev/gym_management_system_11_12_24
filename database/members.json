@@ -279,5 +279,111 @@
         "activity": "N/A",
         "expertise": "N/A",
         "role": "N/A"
+    },
+    {
+        "member_id": "2036551d",
+        "name": "Bart Loas",
+        "user_type": "Gym User",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "city": "London",
+        "membership_type": "Premium",
+        "cost": 350,
+        "join_date": "2024-12-16",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "6b78c13c",
+        "name": "Oleksei Burns",
+        "user_type": "Gym User",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "city": "London",
+        "membership_type": "Weekender",
+        "cost": 80,
+        "join_date": "2024-12-16",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "ecd43740",
+        "name": "Backbreaker Mary",
+        "user_type": "Wellbeing Staff",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "city": "London",
+        "membership_type": "N/A",
+        "cost": 4500,
+        "join_date": "N/A",
+        "schedule": {
+            "Monday": [
+                {
+                    "start_time": "08:00",
+                    "end_time": "16:30"
+                }
+            ],
+            "Tuesday": [
+                {
+                    "start_time": "09:00",
+                    "end_time": "18:00"
+                }
+            ],
+            "Wednesday": [],
+            "Thursday": [],
+            "Friday": [
+                {
+                    "start_time": "10:00",
+                    "end_time": "18:00"
+                }
+            ],
+            "Saturday": [],
+            "Sunday": []
+        },
+        "activity": "Physiotherapy",
+        "expertise": "N/A",
+        "role": "N/A"
+    },
+    {
+        "member_id": "88da0d4d",
+        "name": "Backbreaker Mary",
+        "user_type": "Wellbeing Staff",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "city": "London",
+        "membership_type": "N/A",
+        "cost": 4500,
+        "join_date": "N/A",
+        "schedule": {
+            "Monday": [
+                {
+                    "start_time": "08:00",
+                    "end_time": "16:30"
+                }
+            ],
+            "Tuesday": [
+                {
+                    "start_time": "09:00",
+                    "end_time": "18:00"
+                }
+            ],
+            "Wednesday": [],
+            "Thursday": [],
+            "Friday": [
+                {
+                    "start_time": "10:00",
+                    "end_time": "18:00"
+                }
+            ],
+            "Saturday": [],
+            "Sunday": []
+        },
+        "activity": "Physiotherapy",
+        "expertise": "N/A",
+        "role": "N/A"
     }
 ]

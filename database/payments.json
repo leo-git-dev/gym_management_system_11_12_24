@@ -16,5 +16,14 @@
         "amount": "500.00",
         "date": "2024-12-12",
         "status": "Paid"
+    },
+    {
+        "payment_id": "P3",
+        "member_id": "9d81749e",
+        "member_name": "Lorry Driver Guy",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "amount": "250.00",
+        "date": "2024-12-23",
+        "status": "Paid"
     }
 ]

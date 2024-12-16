@@ -132,11 +132,6 @@
                 "member_id": "3b5a6b77",
                 "day": "Saturday",
                 "time": "14:00-15:00"
-            },
-            {
-                "member_id": "2e4cfa59",
-                "day": "Saturday",
-                "time": "14:00-15:00"
             }
         ]
     },
@@ -227,6 +222,22 @@
             ]
         },
         "capacity": 8,
-        "registered_users": []
+        "registered_users": [
+            {
+                "member_id": "9d81749e",
+                "day": "Wednesday",
+                "time": "12:00-13:00"
+            },
+            {
+                "member_id": "9d81749e",
+                "day": "Thursday",
+                "time": "14:00-15:00"
+            },
+            {
+                "member_id": "6b78c13c",
+                "day": "Wednesday",
+                "time": "12:00-13:00"
+            }
+        ]
     }
 ]

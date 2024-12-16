@@ -320,3 +320,29 @@ class ClassActivityManager:
         :return: True if valid, else False.
         """
         return bool(re.match(r"^\d{2}:\d{2}$", t))
+
+    @classmethod
+    def search_activities(cls, gym_id=None, trainer_id=None):
+        """
+        Search activities based on gym ID and/or trainer ID.
+
+        Args:
+            gym_id (str): The ID of the gym to filter activities by (optional).
+            trainer_id (str): The ID of the trainer to filter activities by (optional).
+
+        Returns:
+            list: A list of activities matching the search criteria. Each activity is a dictionary with full details.
+        """
+        # Fetch all activities
+        activities = cls.view_all_classes()
+
+        # Filter activities based on gym_id and trainer_id
+        filtered_activities = []
+        for activity in activities:
+            matches_gym = gym_id is None or str(activity['gym_id']) == str(gym_id)
+            matches_trainer = trainer_id is None or str(activity['trainer_id']) == str(trainer_id)
+
+            if matches_gym and matches_trainer:
+                filtered_activities.append(activity)
+
+        return filtered_activities

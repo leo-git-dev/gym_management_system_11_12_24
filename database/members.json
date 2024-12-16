@@ -311,8 +311,8 @@
         "role": "N/A"
     },
     {
-        "member_id": "ecd43740",
-        "name": "Backbreaker Mary",
+        "member_id": "76946dce",
+        "name": "Parker Antrax",
         "user_type": "Wellbeing Staff",
         "gym_id": "6b65ee95",
         "gym_name": "St Mary's Fitness Twickenham",
@@ -321,39 +321,39 @@
         "cost": 4500,
         "join_date": "N/A",
         "schedule": {
-            "Monday": [
+            "Monday": [],
+            "Tuesday": [
                 {
                     "start_time": "08:00",
                     "end_time": "16:30"
                 }
             ],
-            "Tuesday": [
-                {
-                    "start_time": "09:00",
-                    "end_time": "18:00"
-                }
-            ],
             "Wednesday": [],
-            "Thursday": [],
-            "Friday": [
+            "Thursday": [
                 {
-                    "start_time": "10:00",
-                    "end_time": "18:00"
+                    "start_time": "12:30",
+                    "end_time": "15:30"
                 }
             ],
-            "Saturday": [],
+            "Friday": [],
+            "Saturday": [
+                {
+                    "start_time": "08:30",
+                    "end_time": "18:30"
+                }
+            ],
             "Sunday": []
         },
-        "activity": "Physiotherapy",
+        "activity": "Nutrition",
         "expertise": "N/A",
         "role": "N/A"
     },
     {
-        "member_id": "88da0d4d",
+        "member_id": "67875785",
         "name": "Backbreaker Mary",
         "user_type": "Wellbeing Staff",
-        "gym_id": "6b65ee95",
-        "gym_name": "St Mary's Fitness Twickenham",
+        "gym_id": "b65313d3",
+        "gym_name": "St Mary's Ham",
         "city": "London",
         "membership_type": "N/A",
         "cost": 4500,
@@ -362,21 +362,21 @@
             "Monday": [
                 {
                     "start_time": "08:00",
-                    "end_time": "16:30"
+                    "end_time": "18:30"
                 }
             ],
-            "Tuesday": [
+            "Tuesday": [],
+            "Wednesday": [
                 {
-                    "start_time": "09:00",
-                    "end_time": "18:00"
+                    "start_time": "11:00",
+                    "end_time": "19:00"
                 }
             ],
-            "Wednesday": [],
             "Thursday": [],
             "Friday": [
                 {
-                    "start_time": "10:00",
-                    "end_time": "18:00"
+                    "start_time": "09:00",
+                    "end_time": "17:30"
                 }
             ],
             "Saturday": [],

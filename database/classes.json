@@ -239,5 +239,26 @@
                 "time": "12:00-13:00"
             }
         ]
+    },
+    {
+        "class_id": "e2451f38",
+        "class_name": "Spin",
+        "trainer_id": "a3188a80",
+        "trainer_name": "Loas Jones",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "schedule": {
+            "Tuesday": [
+                "12:00-13:00"
+            ],
+            "Wednesday": [
+                "13:00-14:00"
+            ],
+            "Friday": [
+                "15:00-16:00"
+            ]
+        },
+        "capacity": 10,
+        "registered_users": []
     }
 ]

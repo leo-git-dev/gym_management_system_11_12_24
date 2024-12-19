@@ -88,5 +88,14 @@
         "time": "10:00",
         "cost": 250,
         "status": "Paid"
+    },
+    {
+        "appointment_id": "6b8cd46e",
+        "member_id": "2036551d",
+        "trainer_id": "67875785",
+        "date": "2024-12-20",
+        "time": "09:30",
+        "cost": 350,
+        "status": "Paid"
     }
 ]

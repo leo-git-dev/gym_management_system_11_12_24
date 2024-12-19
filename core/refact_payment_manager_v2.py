@@ -43,7 +43,8 @@ class PaymentManagementFrame(ttk.Frame):
         """Creates the Add Payment interface."""
         # Configure grid layout
         self.add_tab.columnconfigure(1, weight=1)
-        for i in range(9):  # Updated to accommodate new fields
+        # Adding more rows to accommodate Payment Method and Discount fields plus refresh button
+        for i in range(9):
             self.add_tab.rowconfigure(i, weight=1)
 
         # Select User
@@ -56,20 +57,21 @@ class PaymentManagementFrame(ttk.Frame):
         self.user_dropdown.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
         self.user_dropdown.bind("<<ComboboxSelected>>", self.display_user_details)
 
+        # Refresh Users Button
+        refresh_users_button = ttk.Button(self.add_tab, text="Refresh Users", command=self.refresh_user_dropdown)
+        refresh_users_button.grid(row=1, column=0, columnspan=2, pady=5)
+
         # User details table
         self.details_frame = ttk.Frame(self.add_tab)
-        self.details_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
-
-        # Configure details_frame grid
-        self.details_frame.columnconfigure(1, weight=1)
+        self.details_frame.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
 
         # Amount
-        ttk.Label(self.add_tab, text="Amount:").grid(row=2, column=0, padx=5, pady=5, sticky="e")
+        ttk.Label(self.add_tab, text="Amount:").grid(row=3, column=0, padx=5, pady=5, sticky="e")
         self.amount_entry = ttk.Entry(self.add_tab)
-        self.amount_entry.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
+        self.amount_entry.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
 
         # Payment Date
-        ttk.Label(self.add_tab, text="Payment Date:").grid(row=3, column=0, padx=5, pady=5, sticky="e")
+        ttk.Label(self.add_tab, text="Payment Date:").grid(row=4, column=0, padx=5, pady=5, sticky="e")
         self.payment_date_calendar = Calendar(
             self.add_tab,
             selectmode="day",
@@ -78,51 +80,59 @@ class PaymentManagementFrame(ttk.Frame):
             foreground="gray",
             headersbackground="black",
         )
-        self.payment_date_calendar.grid(row=3, column=1, padx=5, pady=5, sticky="w")
+        self.payment_date_calendar.grid(row=4, column=1, padx=5, pady=5, sticky="w")
 
         # Payment Status
-        ttk.Label(self.add_tab, text="Payment Status:").grid(row=4, column=0, padx=5, pady=5, sticky="e")
+        ttk.Label(self.add_tab, text="Payment Status:").grid(row=5, column=0, padx=5, pady=5, sticky="e")
         self.status_dropdown = ttk.Combobox(
             self.add_tab,
             values=["Paid", "Pending"],
             state="readonly"
         )
-        self.status_dropdown.grid(row=4, column=1, padx=5, pady=5, sticky="ew")
+        self.status_dropdown.grid(row=5, column=1, padx=5, pady=5, sticky="ew")
         self.status_dropdown.set("Paid")  # Default value
 
         # Payment Type
-        ttk.Label(self.add_tab, text="Payment Type:").grid(row=5, column=0, padx=5, pady=5, sticky="e")
+        ttk.Label(self.add_tab, text="Payment Type:").grid(row=6, column=0, padx=5, pady=5, sticky="e")
         self.payment_type_dropdown = ttk.Combobox(
             self.add_tab,
             values=["Monthly", "Quarterly", "Annual"],
             state="readonly"
         )
-        self.payment_type_dropdown.grid(row=5, column=1, padx=5, pady=5, sticky="ew")
+        self.payment_type_dropdown.grid(row=6, column=1, padx=5, pady=5, sticky="ew")
         self.payment_type_dropdown.set("Select Payment Type")
 
         # Payment Method
-        ttk.Label(self.add_tab, text="Payment Method:").grid(row=6, column=0, padx=5, pady=5, sticky="e")
+        ttk.Label(self.add_tab, text="Payment Method:").grid(row=7, column=0, padx=5, pady=5, sticky="e")
         self.payment_method_dropdown = ttk.Combobox(
             self.add_tab,
             values=["Credit Card", "Direct Debit"],
             state="readonly"
         )
-        self.payment_method_dropdown.grid(row=6, column=1, padx=5, pady=5, sticky="ew")
+        self.payment_method_dropdown.grid(row=7, column=1, padx=5, pady=5, sticky="ew")
         self.payment_method_dropdown.set("Select Payment Method")
 
         # Discount Applied
-        ttk.Label(self.add_tab, text="Apply Discount:").grid(row=7, column=0, padx=5, pady=5, sticky="e")
+        ttk.Label(self.add_tab, text="Apply Discount:").grid(row=8, column=0, padx=5, pady=5, sticky="e")
         self.discount_dropdown = ttk.Combobox(
             self.add_tab,
             values=["Yes", "No"],
             state="readonly"
         )
-        self.discount_dropdown.grid(row=7, column=1, padx=5, pady=5, sticky="ew")
+        self.discount_dropdown.grid(row=8, column=1, padx=5, pady=5, sticky="ew")
         self.discount_dropdown.set("No")  # Default value
 
         # Add Payment Button
         add_button = ttk.Button(self.add_tab, text="Add Payment", command=self.add_payment)
-        add_button.grid(row=8, column=0, columnspan=2, pady=10)
+        add_button.grid(row=9, column=0, columnspan=2, pady=10)
+
+    def refresh_user_dropdown(self):
+        """Refreshes the user dropdown to show newly added members."""
+        self.user_dropdown['values'] = self.get_gym_user_names()
+        self.user_dropdown.set("")  # Reset selection
+        # Clear user details
+        for widget in self.details_frame.winfo_children():
+            widget.destroy()
 
     def display_user_details(self, event=None):
         """Displays selected gym user's details."""
@@ -134,7 +144,8 @@ class PaymentManagementFrame(ttk.Frame):
         user = MemberManagement.search_member(name=user_name)
 
         if not user:
-            ttk.Label(self.details_frame, text="No details found for the selected user.").grid(row=0, column=0, sticky="w")
+            ttk.Label(self.details_frame, text="No details found for the selected user.").grid(row=0, column=0,
+                                                                                               sticky="w")
             return
 
         # Filter and rename user details
@@ -147,13 +158,13 @@ class PaymentManagementFrame(ttk.Frame):
             "Gym Name": user.get("gym_name", "N/A"),
             "Monthly Fee": user.get("cost", "N/A"),
             "Payment Type": user.get("payment_type", "N/A"),
-            "Loyalty Points": user.get("loyalty_points", 0),
         }
 
         # Display filtered details in a table format
         headers = ["Field", "Value"]
         for col, header in enumerate(headers):
-            ttk.Label(self.details_frame, text=header, font=("Helvetica", 10, "bold")).grid(row=0, column=col, padx=5, pady=5, sticky="w")
+            ttk.Label(self.details_frame, text=header, font=("Helvetica", 10, "bold")).grid(row=0, column=col, padx=5,
+                                                                                            pady=5, sticky="w")
 
         for row, (field, value) in enumerate(filtered_details.items(), start=1):
             ttk.Label(self.details_frame, text=field).grid(row=row, column=0, padx=5, pady=5, sticky="w")
@@ -178,9 +189,10 @@ class PaymentManagementFrame(ttk.Frame):
             if payment_type not in ["Monthly", "Quarterly", "Annual"]:
                 raise ValueError("Please select a valid payment type.")
             if payment_method not in ["Credit Card", "Direct Debit"]:
-                raise ValueError("Please select a valid payment method.")
+                raise ValueError(
+                    f"Invalid payment method '{payment_method}'. Valid options are: ['Credit Card', 'Direct Debit']")
             if discount_applied not in ["Yes", "No"]:
-                raise ValueError("Please select whether to apply a discount.")
+                raise ValueError(f"Invalid discount option '{discount_applied}'. Valid options are: ['Yes', 'No']")
 
             user = MemberManagement.search_member(name=user_name)
             if not user:
@@ -226,28 +238,26 @@ class PaymentManagementFrame(ttk.Frame):
         # Payments Treeview
         self.payments_tree = ttk.Treeview(
             self.view_tab,
-            columns=("ID", "Member ID", "Name", "Gym", "Amount", "Date", "Status", "Payment Type", "Payment Method", "Discount Applied", "Note"),
+            columns=("ID", "Member ID", "Name", "Gym", "Amount", "Date", "Status", "Payment Type"),
             show="headings",
         )
-        # Define headings
-        headings = ["Payment ID", "Member ID", "Member Name", "Gym Name", "Amount", "Date", "Status", "Payment Type", "Payment Method", "Discount Applied", "Note"]
-        for col, heading in enumerate(headings, start=1):
-            self.payments_tree.heading(f"#{col}", text=heading)
-            # Configure column widths and anchors
-            if heading in ["Payment ID", "Member ID", "Payment Method", "Discount Applied"]:
-                self.payments_tree.column(f"#{col}", width=120, anchor="center")
-            elif heading == "Amount":
-                self.payments_tree.column(f"#{col}", width=100, anchor="e")
-            elif heading == "Date":
-                self.payments_tree.column(f"#{col}", width=100, anchor="center")
-            elif heading == "Status":
-                self.payments_tree.column(f"#{col}", width=100, anchor="center")
-            elif heading == "Payment Type":
-                self.payments_tree.column(f"#{col}", width=120, anchor="center")
-            elif heading == "Note":
-                self.payments_tree.column(f"#{col}", width=200, anchor="w")
-            else:
-                self.payments_tree.column(f"#{col}", width=150, anchor="w")
+        self.payments_tree.heading("ID", text="Payment ID")
+        self.payments_tree.heading("Member ID", text="Member ID")
+        self.payments_tree.heading("Name", text="Member Name")
+        self.payments_tree.heading("Gym", text="Gym Name")
+        self.payments_tree.heading("Amount", text="Amount")
+        self.payments_tree.heading("Date", text="Date")
+        self.payments_tree.heading("Status", text="Status")
+        self.payments_tree.heading("Payment Type", text="Payment Type")
+
+        self.payments_tree.column("ID", width=100, anchor="center")
+        self.payments_tree.column("Member ID", width=100, anchor="center")
+        self.payments_tree.column("Name", width=150, anchor="w")
+        self.payments_tree.column("Gym", width=150, anchor="w")
+        self.payments_tree.column("Amount", width=80, anchor="e")
+        self.payments_tree.column("Date", width=100, anchor="center")
+        self.payments_tree.column("Status", width=80, anchor="center")
+        self.payments_tree.column("Payment Type", width=100, anchor="center")
 
         self.payments_tree.grid(row=0, column=0, sticky="nsew")
 
@@ -287,9 +297,6 @@ class PaymentManagementFrame(ttk.Frame):
                         payment.get("date", "N/A"),
                         payment.get("status", "N/A"),
                         payment.get("payment_type", "N/A"),
-                        payment.get("payment_method", "N/A"),
-                        payment.get("discount_applied", "No"),
-                        payment.get("note", ""),
                     ),
                 )
         except Exception as e:

@@ -76,5 +76,18 @@
         "payment_method": "Credit Card",
         "discount_applied": "Yes",
         "note": "10% discount applied for annual payment."
+    },
+    {
+        "payment_id": "P7",
+        "member_id": "421adc7c",
+        "member_name": "Polly Freya",
+        "gym_name": "St Mary's Richmond Hill",
+        "amount": "3780.00",
+        "date": "2024-12-20",
+        "status": "Paid",
+        "payment_type": "Annual",
+        "payment_method": "Credit Card",
+        "discount_applied": "Yes",
+        "note": "10% discount applied for annual payment."
     }
 ]

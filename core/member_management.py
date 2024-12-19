@@ -1,6 +1,7 @@
 from utils.helpers import generate_unique_id
 from database.data_loader import DataLoader
 from core.gym_management import GymManager
+from core.payments import PaymentManager
 import os
 import logging
 
@@ -324,3 +325,12 @@ class MemberManagement:
                 staff_totals[user_type]["cost"] += float(member.get("cost", 0))
 
         return staff_totals
+
+    @staticmethod
+    def get_member_loyalty_points(member_id):
+        """
+        Retrieve the loyalty points for a specific member.
+        :param member_id: The ID of the member.
+        :return: Loyalty points.
+        """
+        return PaymentManager.calculate_loyalty_rewards(member_id)

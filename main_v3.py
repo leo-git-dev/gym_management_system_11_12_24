@@ -7,6 +7,7 @@ from core.refact_gym_manager_v2 import GymManagementApp
 from core.refact_class_activity_manager_v2 import ClassManagementApp
 from core.refact_payment_manager_v2 import PaymentManagementFrame
 from core.refact_appointment_manager_v2 import AppointmentManagerFrame
+from core.refact_health_condition_manager_v2 import HealthConditionFrame
 from reports.refact_report_manager_v2 import ReportManagementFrame
 import os
 
@@ -226,6 +227,7 @@ class GymManagementSystem(tk.Tk):
         self.appointment_management_frame = AppointmentManagerFrame(self.notebook)
         self.payment_management_frame = PaymentManagementFrame(self.notebook)
         self.report_management_frame = ReportManagementFrame(self.notebook, self.data_loader)
+        self.health_condition_frame = HealthConditionFrame(self.notebook)
 
         # Decide which tabs to add based on user type
         user_type = self.logged_in_user["user_type"]
@@ -238,12 +240,16 @@ class GymManagementSystem(tk.Tk):
             self.notebook.add(self.appointment_management_frame, text="Appointment Management")
             self.notebook.add(self.payment_management_frame, text="Payment Management")
             self.notebook.add(self.report_management_frame, text="Report Management")
+            self.health_condition_frame = HealthConditionFrame(self.notebook)
+            self.notebook.add(self.health_condition_frame, text="Health Condition")
 
         elif user_type in ["Training Staff", "Wellbeing Staff"]:
             self.notebook.add(self.class_management_frame, text="Class Management")
             self.notebook.add(self.registration_frame, text="Registration Management")
             self.notebook.add(self.appointment_management_frame, text="Appointment Management")
             self.notebook.add(self.payment_management_frame, text="Payment Management")  # Assuming staff can view payments
+            self.health_condition_frame = HealthConditionFrame(self.notebook)
+            self.notebook.add(self.health_condition_frame, text="Health Condition")
 
         elif user_type == "Management Staff":
             self.notebook.add(self.user_management_frame, text="User Management")

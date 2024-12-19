@@ -1,82 +1,80 @@
 [
     {
         "payment_id": "P1",
-        "member_id": "8f451748",
-        "member_name": "Dongard Tess",
+        "member_id": "196f78bd",
+        "member_name": "test_member_5",
         "gym_name": "St Mary's Richmond Hill",
-        "amount": "350.00",
-        "date": "2024-12-10",
+        "amount": "560.00",
+        "date": "2024-12-18",
         "status": "Paid",
-        "payment_type": "Quarterly"
+        "payment_type": "Monthly",
+        "payment_method": "Direct Debit",
+        "discount_applied": "No",
+        "note": ""
     },
     {
         "payment_id": "P2",
-        "member_id": "3b5a6b77",
-        "member_name": "Test Integral3",
-        "gym_name": "St Mary's Richmond Hill",
-        "amount": "500.00",
-        "date": "2024-12-12",
-        "status": "Paid",
-        "payment_type": "Monthly"
-    },
-    {
-        "payment_id": "P3",
         "member_id": "9d81749e",
         "member_name": "Lorry Driver Guy",
         "gym_name": "St Mary's Fitness Twickenham",
-        "amount": "250.00",
-        "date": "2024-12-23",
+        "amount": "700.00",
+        "date": "2024-12-18",
         "status": "Paid",
-        "payment_type": "Monthly"
+        "payment_type": "Quarterly",
+        "payment_method": "Credit Card",
+        "discount_applied": "No",
+        "note": ""
+    },
+    {
+        "payment_id": "P3",
+        "member_id": "9554d789",
+        "member_name": "LLulu Lones",
+        "gym_name": "St Mary's Richmond Hill",
+        "amount": "450.00",
+        "date": "2024-12-16",
+        "status": "Paid",
+        "payment_type": "Monthly",
+        "payment_method": "Credit Card",
+        "discount_applied": "No",
+        "note": ""
     },
     {
         "payment_id": "P4",
-        "member_id": "e6df8161",
-        "member_name": "test_payment_type_main",
-        "gym_name": "St Mary's Richmond Hill",
-        "amount": "500.00",
-        "date": "2024-12-19",
-        "status": "Paid",
-        "payment_type": "Monthly"
-    },
-    {
-        "payment_id": "P5",
-        "member_id": "5dd03bd8",
-        "member_name": "test_payment_type_4",
-        "gym_name": "St Mary's Richmond Hill",
-        "amount": "350.00",
-        "date": "2024-12-18",
-        "status": "Paid",
-        "payment_type": "Monthly"
-    },
-    {
-        "payment_id": "P6",
-        "member_id": "e6df8161",
-        "member_name": "test_payment_type_main",
-        "gym_name": "St Mary's Richmond Hill",
-        "amount": "500.00",
-        "date": "2024-12-18",
-        "status": "Paid",
-        "payment_type": "Monthly"
-    },
-    {
-        "payment_id": "P7",
-        "member_id": "5dd03bd8",
-        "member_name": "test_payment_type_4",
+        "member_id": "c55f0eeb",
+        "member_name": "Jonah Jones",
         "gym_name": "St Mary's Richmond Hill",
         "amount": "450.00",
         "date": "2024-12-18",
         "status": "Paid",
-        "payment_type": "Quarterly"
+        "payment_type": "Monthly",
+        "payment_method": "Direct Debit",
+        "discount_applied": "No",
+        "note": ""
     },
     {
-        "payment_id": "P8",
+        "payment_id": "P5",
         "member_id": "9d81749e",
         "member_name": "Lorry Driver Guy",
         "gym_name": "St Mary's Fitness Twickenham",
-        "amount": "560.00",
-        "date": "2024-12-16",
+        "amount": "250.00",
+        "date": "2024-12-19",
         "status": "Paid",
-        "payment_type": "Monthly"
+        "payment_type": "Monthly",
+        "payment_method": "Direct Debit",
+        "discount_applied": "No",
+        "note": ""
+    },
+    {
+        "payment_id": "P6",
+        "member_id": "2036551d",
+        "member_name": "Bart Loas",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "amount": "3780.00",
+        "date": "2024-12-19",
+        "status": "Paid",
+        "payment_type": "Annual",
+        "payment_method": "Credit Card",
+        "discount_applied": "Yes",
+        "note": "10% discount applied for annual payment."
     }
 ]

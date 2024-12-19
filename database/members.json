@@ -33,7 +33,8 @@
         },
         "activity": "N/A",
         "expertise": "Zumba",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "c55f0eeb",
@@ -51,7 +52,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "8f451748",
@@ -69,7 +71,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "9554d789",
@@ -87,7 +90,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "14804ca0",
@@ -123,7 +127,8 @@
         },
         "activity": "Physiotherapy",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "8e94beeb",
@@ -141,7 +146,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "2e4cfa59",
@@ -159,7 +165,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "3b5a6b77",
@@ -177,7 +184,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "b37db60d",
@@ -195,7 +203,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "Cafeteria"
+        "role": "Cafeteria",
+        "loyalty_points": 0
     },
     {
         "member_id": "0bdfc717",
@@ -213,7 +222,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "Cleaning"
+        "role": "Cleaning",
+        "loyalty_points": 0
     },
     {
         "member_id": "ac59db2d",
@@ -231,7 +241,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "ad81be95",
@@ -260,7 +271,8 @@
         },
         "activity": "N/A",
         "expertise": "Fencing",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "9d81749e",
@@ -276,7 +288,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "fd8dcf58",
@@ -292,7 +305,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "2036551d",
@@ -308,7 +322,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 10
     },
     {
         "member_id": "6b78c13c",
@@ -324,7 +339,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "76946dce",
@@ -363,7 +379,8 @@
         },
         "activity": "Nutrition",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "67875785",
@@ -402,7 +419,8 @@
         },
         "activity": "Physiotherapy",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "501ca758",
@@ -418,7 +436,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "5dd03bd8",
@@ -434,7 +453,8 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
     },
     {
         "member_id": "e6df8161",
@@ -450,6 +470,41 @@
         "schedule": {},
         "activity": "N/A",
         "expertise": "N/A",
-        "role": "N/A"
+        "role": "N/A",
+        "loyalty_points": 0
+    },
+    {
+        "member_id": "196f78bd",
+        "name": "test_member_5",
+        "user_type": "Gym User",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "city": "Wales",
+        "membership_type": "Premium",
+        "cost": 350,
+        "payment_type": "Monthly",
+        "join_date": "2024-12-19",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A",
+        "loyalty_points": 0
+    },
+    {
+        "member_id": "3a178748",
+        "name": "Test6",
+        "user_type": "Gym User",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "city": "London",
+        "membership_type": "Weekender",
+        "cost": 80,
+        "payment_type": "Annual",
+        "join_date": "2024-12-20",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A",
+        "loyalty_points": 0
     }
 ]

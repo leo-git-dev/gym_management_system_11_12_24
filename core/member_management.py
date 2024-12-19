@@ -24,14 +24,18 @@ logger = logging.getLogger(__name__)
 
 class MemberManagement:
     @staticmethod
-    def add_member(name, user_type, gym_id, **kwargs):
+    def add_member(name, user_type, gym_id,  payment_type="Monthly", **kwargs):
         """
         Add a new member to the gym with specific roles and schedules.
+        :param payment_type: Type of payment ('Monthly', 'Quarterly', 'Annual').
         :param name: Name of the member.
         :param user_type: Type of user (e.g., Gym User, Training Staff, etc.).
         :param gym_id: ID of the gym.
         :param kwargs: Additional arguments like membership_type, cost, activities, schedule, role, or join_date.
         """
+        # Validate payment type
+        PaymentManager.validate_payment_type(payment_type)
+
         members = DataLoader.get_data("members")
         gyms = DataLoader.get_data("gyms")
 
@@ -53,6 +57,7 @@ class MemberManagement:
             "city": gym["city"],
             "membership_type": kwargs.get("membership_type", "N/A"),
             "cost": kwargs.get("cost", 0),
+            "payment_type": payment_type,
             "join_date": kwargs.get("join_date", "N/A"),
             "schedule": kwargs.get("schedule", {}),
             "activity": kwargs.get("activity", "N/A"),
@@ -325,12 +330,3 @@ class MemberManagement:
                 staff_totals[user_type]["cost"] += float(member.get("cost", 0))
 
         return staff_totals
-
-    @staticmethod
-    def get_member_loyalty_points(member_id):
-        """
-        Retrieve the loyalty points for a specific member.
-        :param member_id: The ID of the member.
-        :return: Loyalty points.
-        """
-        return PaymentManager.calculate_loyalty_rewards(member_id)

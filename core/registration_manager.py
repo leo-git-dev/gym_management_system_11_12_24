@@ -3,6 +3,7 @@
 from database.data_loader import DataLoader
 from core.class_activity_manager import ClassActivityManager
 from core.member_management import MemberManagement
+from core.gym_management import GymManager
 import logging
 
 logger = logging.getLogger(__name__)
@@ -133,3 +134,43 @@ class RegistrationManager:
         registered_users = [m for m in members if m["member_id"] in member_ids]
         logger.info(f"Retrieved {len(registered_users)} registered users for Class ID {class_id}.")
         return registered_users
+
+    @staticmethod
+    def get_all_registrations():
+        """
+        Retrieve all registration records with details about the gym, class, schedule, and training staff.
+        """
+        logger.debug("Retrieving all registrations from all classes.")
+        classes = DataLoader.get_data("classes")
+        members = MemberManagement.view_all_members()
+        gyms = GymManager.view_all_gyms()
+
+        all_data = []
+        for c in classes:
+            gym_id = c["gym_id"]
+            gym = next((g for g in gyms if g["gym_id"] == gym_id), None)
+            training_staff = c.get("trainer_name", "N/A")
+            class_name = c["class_name"]
+            class_id = c["class_id"]
+            registered_users = c.get("registered_users", [])
+            for ru in registered_users:
+                member_id = ru["member_id"]
+                day = ru["day"]
+                time = ru["time"]
+                member = next((m for m in members if m["member_id"] == member_id), {})
+                member_name = member.get("name", "Unknown")
+                gym_name = gym.get("gym_name", "Unknown") if gym else "Unknown"
+                all_data.append({
+                    "member_id": member_id,
+                    "member_name": member_name,
+                    "class_id": class_id,
+                    "class_name": class_name,
+                    "gym_id": gym_id,
+                    "gym_name": gym_name,
+                    "day": day,
+                    "time": time,
+                    "training_staff": training_staff
+                })
+
+        logger.info(f"Retrieved {len(all_data)} total registrations across all classes.")
+        return all_data

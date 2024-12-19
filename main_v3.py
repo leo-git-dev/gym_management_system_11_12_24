@@ -18,6 +18,8 @@ ADMIN_PASSWORD = "admin123"
 STAFF_USERNAME = "staff"
 STAFF_PASSWORD = "staff123"
 
+'''Login to HealthConditionFrame USERNAME: "health_user" Password: secret'''
+
 def authenticate_admin(username, password):
     """Authenticate Admin user."""
     return username == ADMIN_USERNAME and password == ADMIN_PASSWORD

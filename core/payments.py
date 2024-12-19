@@ -1,10 +1,13 @@
+# core/payments.py
+
 from utils.helpers import generate_payment_id
 from database.data_loader import DataLoader
 
 
 class PaymentManager:
     @staticmethod
-    def add_payment(member_id, amount, date, status):
+    def add_payment(member_id, amount, date, status, payment_type=None):
+        """Add a new payment record to the database."""
         members = DataLoader.get_data("members")
         payments = DataLoader.get_data("payments")  # Load payments data
 
@@ -21,6 +24,12 @@ class PaymentManager:
         except ValueError as e:
             raise ValueError(f"Invalid payment amount: {e}")
 
+        # Validate payment type
+        valid_payment_types = ["Monthly", "Quarterly", "Annual"]
+        if payment_type not in valid_payment_types:
+            raise ValueError(f"Invalid payment type '{payment_type}'. "
+                             f"Valid options are: {valid_payment_types}")
+
         # Retrieve gym details from the member's information
         gym_name = member.get("gym_name", "Unknown")
 
@@ -35,20 +44,52 @@ class PaymentManager:
             "gym_name": gym_name,
             "amount": f"{amount:.2f}",  # Store amount as a formatted string
             "date": date,
-            "status": status
+            "status": status,
+            "payment_type": payment_type
         }
         payments.append(new_payment)
 
         # Save the updated payments data
         DataLoader.save_data("payments", payments)
-        print(f"Payment added successfully for Member ID: {member_id} at Gym: {gym_name}.")
+        print(f"Payment added successfully for Member ID: {member_id} at Gym: {gym_name} with Payment Type: {payment_type}.")
 
     @staticmethod
-    def view_all_payments():
-        return DataLoader.get_data("payments")
+    def validate_payment_type(payment_type):
+        """
+        Validate the payment type against available options.
+        :param payment_type: The payment type to validate.
+        :return: True if valid, raises ValueError otherwise.
+        """
+        valid_payment_types = ["Monthly", "Quarterly", "Annual"]
+        if payment_type not in valid_payment_types:
+            raise ValueError(f"Invalid payment type '{payment_type}'. "
+                             f"Valid options are: {valid_payment_types}")
+        return True
 
     @staticmethod
-    def update_payment(payment_id, amount=None, date=None, status=None):
+    def view_all_payments(payment_type=None):
+        """
+        Retrieve all payment records, optionally filtered by payment_type.
+        :param payment_type: (Optional) Filter payments by this type.
+        :return: List of payment records.
+        """
+        payments = DataLoader.get_data("payments")
+        if payment_type:
+            PaymentManager.validate_payment_type(payment_type)
+            payments = [p for p in payments if p.get("payment_type") == payment_type]
+        return payments
+
+    @staticmethod
+    def update_payment(payment_id, amount=None, date=None, status=None, payment_type=None):
+        """
+        Update an existing payment record.
+        :param payment_id: ID of the payment to update.
+        :param amount: (Optional) New amount.
+        :param date: (Optional) New date.
+        :param status: (Optional) New status.
+        :param payment_type: (Optional) New payment type.
+        :return: None
+        """
         payments = DataLoader.get_data("payments")  # Load payments data
         payment = next((p for p in payments if p["payment_id"] == payment_id), None)
 
@@ -56,12 +97,21 @@ class PaymentManager:
             raise ValueError(f"Payment ID {payment_id} not found.")
 
         # Update the provided fields
-        if amount:
-            payment["amount"] = f"{float(amount):.2f}"
-        if date:
+        if amount is not None:
+            try:
+                amount = float(amount)
+                if amount <= 0:
+                    raise ValueError("Amount must be greater than zero.")
+                payment["amount"] = f"{amount:.2f}"
+            except ValueError as e:
+                raise ValueError(f"Invalid amount: {e}")
+        if date is not None:
             payment["date"] = date
-        if status:
+        if status is not None:
             payment["status"] = status
+        if payment_type is not None:
+            PaymentManager.validate_payment_type(payment_type)
+            payment["payment_type"] = payment_type
 
         # Save the updated payments list
         DataLoader.save_data("payments", payments)
@@ -69,6 +119,11 @@ class PaymentManager:
 
     @staticmethod
     def delete_payment(payment_id):
+        """
+        Delete a payment record from the database.
+        :param payment_id: ID of the payment to delete.
+        :return: None
+        """
         payments = DataLoader.get_data("payments")  # Load payments data
         updated_payments = [p for p in payments if p["payment_id"] != payment_id]
 
@@ -120,40 +175,3 @@ class PaymentManager:
         )
 
         return total
-
-
-'''
-
-from utils.helpers import generate_unique_id
-from database.data_loader import DataLoader
-
-
-class PaymentManager:
-    @staticmethod
-    def add_payment(member_id, amount, date, status):
-        try:
-            amount = float(amount)
-            if amount <= 0:
-                raise ValueError("Payment amount must be greater than zero.")
-        except ValueError as e:
-            print(f"Invalid payment amount: {e}")
-            return
-
-        payments = DataLoader.get_data("payments")
-        new_payment_id = generate_unique_id(payments, "payment_id")
-
-        new_payment = {
-            "payment_id": f"P{new_payment_id}",
-            "member_id": member_id,
-            "amount": str(amount),  # Store amount as string for consistency in CSV
-            "date": date,
-            "status": status
-        }
-        payments.append(new_payment)
-        DataLoader.save_data("payments", payments)
-        print(f"Payment added successfully with ID: P{new_payment_id}")
-
-    @staticmethod
-    def view_all_payments():
-        return DataLoader.get_data("payments")
-'''

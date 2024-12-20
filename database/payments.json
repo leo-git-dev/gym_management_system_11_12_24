@@ -89,5 +89,31 @@
         "payment_method": "Credit Card",
         "discount_applied": "Yes",
         "note": "10% discount applied for annual payment."
+    },
+    {
+        "payment_id": "P8",
+        "member_id": "4f0b1e70",
+        "member_name": "Kurt Marhen",
+        "gym_name": "St Mary's Ham",
+        "amount": "3780.00",
+        "date": "2024-12-21",
+        "status": "Paid",
+        "payment_type": "Annual",
+        "payment_method": "Credit Card",
+        "discount_applied": "Yes",
+        "note": "10% discount applied for annual payment."
+    },
+    {
+        "payment_id": "P9",
+        "member_id": "51ae9392",
+        "member_name": "Bram Stark",
+        "gym_name": "St Mary's Ham",
+        "amount": "3780.00",
+        "date": "2024-12-20",
+        "status": "Paid",
+        "payment_type": "Annual",
+        "payment_method": "Credit Card",
+        "discount_applied": "Yes",
+        "note": "10% discount applied for annual payment."
     }
 ]

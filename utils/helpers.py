@@ -52,3 +52,26 @@ def validate_payment_type(payment_type):
         raise ValueError(f"Invalid payment type '{payment_type}'. "
                          f"Valid options are: {valid_payment_types}")
     return True
+
+def determine_payment_type(user_type, payment_type):
+    """
+    Determine the correct payment type based on the user_type.
+    Gym Users must have a valid payment_type (Monthly, Quarterly, Annual).
+    Staff members (Training, Wellbeing, Management) must have 'N/A'.
+    Other user types default to 'N/A'.
+
+    :param user_type: The type of the user (e.g., "Gym User", "Training Staff", etc.).
+    :param payment_type: The provided payment type.
+    :return: The final payment type string.
+    """
+    staff_types = ["Training Staff", "Wellbeing Staff", "Management Staff"]
+    if user_type == "Gym User":
+        # Validate payment type for gym users
+        validate_payment_type(payment_type)
+        return payment_type
+    elif user_type in staff_types:
+        # Staff members have payment_type = 'N/A'
+        return "N/A"
+    else:
+        # Default to 'N/A' for any other user type
+        return "N/A"

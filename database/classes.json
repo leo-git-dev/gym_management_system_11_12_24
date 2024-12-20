@@ -270,5 +270,26 @@
         },
         "capacity": 10,
         "registered_users": []
+    },
+    {
+        "class_id": "8bc2ced5",
+        "class_name": "Tricking",
+        "trainer_id": "1bb37fcd",
+        "trainer_name": "Dung Bare",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "schedule": {
+            "Wednesday": [
+                "13:00-14:00"
+            ]
+        },
+        "capacity": 10,
+        "registered_users": [
+            {
+                "member_id": "6b78c13c",
+                "day": "Wednesday",
+                "time": "13:00-14:00"
+            }
+        ]
     }
 ]

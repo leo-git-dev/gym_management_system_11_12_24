@@ -131,63 +131,6 @@
         "loyalty_points": 0
     },
     {
-        "member_id": "8e94beeb",
-        "name": "Test Integral",
-        "username": "test_integral",
-        "password": "test123",
-        "user_type": "Gym User",
-        "gym_id": "c5d3ca4b",
-        "gym_name": "St Mary's Richmond Hill",
-        "city": "London",
-        "membership_type": "Premium",
-        "cost": 350,
-        "payment_type": "Annual",
-        "join_date": "2024-12-09",
-        "schedule": {},
-        "activity": "N/A",
-        "expertise": "N/A",
-        "role": "N/A",
-        "loyalty_points": 0
-    },
-    {
-        "member_id": "2e4cfa59",
-        "name": "Test Integral",
-        "username": "test_integral2",
-        "password": "test234",
-        "user_type": "Gym User",
-        "gym_id": "c5d3ca4b",
-        "gym_name": "St Mary's Richmond Hill",
-        "city": "London",
-        "membership_type": "Standard",
-        "payment_type": "Annual",
-        "cost": 200,
-        "join_date": "2024-12-10",
-        "schedule": {},
-        "activity": "N/A",
-        "expertise": "N/A",
-        "role": "N/A",
-        "loyalty_points": 0
-    },
-    {
-        "member_id": "3b5a6b77",
-        "name": "Test Integral3",
-        "username": "test_integral3",
-        "password": "test345",
-        "user_type": "Gym User",
-        "gym_id": "c5d3ca4b",
-        "gym_name": "St Mary's Richmond Hill",
-        "city": "London",
-        "membership_type": "Standard",
-        "cost": 200,
-        "payment_type": "Annual",
-        "join_date": "2024-12-10",
-        "schedule": {},
-        "activity": "N/A",
-        "expertise": "N/A",
-        "role": "N/A",
-        "loyalty_points": 0
-    },
-    {
         "member_id": "b37db60d",
         "name": "Trass Oar",
         "username": "trass_oar",
@@ -223,25 +166,6 @@
         "activity": "N/A",
         "expertise": "N/A",
         "role": "Cleaning",
-        "loyalty_points": 0
-    },
-    {
-        "member_id": "ac59db2d",
-        "name": "Nameless",
-        "username": "nameless_user",
-        "password": "name123",
-        "user_type": "Gym User",
-        "gym_id": "c5d3ca4b",
-        "gym_name": "St Mary's Richmond Hill",
-        "city": "London",
-        "membership_type": "Weekender",
-        "payment_type": "N/A",
-        "cost": 80,
-        "join_date": "2024-12-10",
-        "schedule": {},
-        "activity": "N/A",
-        "expertise": "N/A",
-        "role": "N/A",
         "loyalty_points": 0
     },
     {
@@ -423,108 +347,6 @@
         "loyalty_points": 0
     },
     {
-        "member_id": "501ca758",
-        "name": "Test_payment_type",
-        "user_type": "Gym User",
-        "gym_id": "c5d3ca4b",
-        "gym_name": "St Mary's Richmond Hill",
-        "city": "Wales",
-        "membership_type": "Premium",
-        "cost": 350,
-        "payment_type": "Monthly",
-        "join_date": "2024-12-19",
-        "schedule": {},
-        "activity": "N/A",
-        "expertise": "N/A",
-        "role": "N/A",
-        "loyalty_points": 0
-    },
-    {
-        "member_id": "5dd03bd8",
-        "name": "test_payment_type_4",
-        "user_type": "Gym User",
-        "gym_id": "c5d3ca4b",
-        "gym_name": "St Mary's Richmond Hill",
-        "city": "Wales",
-        "membership_type": "Premium",
-        "cost": 350,
-        "payment_type": "Monthly",
-        "join_date": "2024-12-19",
-        "schedule": {},
-        "activity": "N/A",
-        "expertise": "N/A",
-        "role": "N/A",
-        "loyalty_points": 0
-    },
-    {
-        "member_id": "e6df8161",
-        "name": "test_payment_type_main",
-        "user_type": "Gym User",
-        "gym_id": "c5d3ca4b",
-        "gym_name": "St Mary's Richmond Hill",
-        "city": "Wales",
-        "membership_type": "Standard",
-        "cost": 200,
-        "payment_type": "Monthly",
-        "join_date": "2024-12-19",
-        "schedule": {},
-        "activity": "N/A",
-        "expertise": "N/A",
-        "role": "N/A",
-        "loyalty_points": 0
-    },
-    {
-        "member_id": "196f78bd",
-        "name": "test_member_5",
-        "user_type": "Gym User",
-        "gym_id": "c5d3ca4b",
-        "gym_name": "St Mary's Richmond Hill",
-        "city": "Wales",
-        "membership_type": "Premium",
-        "cost": 350,
-        "payment_type": "Monthly",
-        "join_date": "2024-12-19",
-        "schedule": {},
-        "activity": "N/A",
-        "expertise": "N/A",
-        "role": "N/A",
-        "loyalty_points": 0
-    },
-    {
-        "member_id": "3a178748",
-        "name": "Test6",
-        "user_type": "Gym User",
-        "gym_id": "6b65ee95",
-        "gym_name": "St Mary's Fitness Twickenham",
-        "city": "London",
-        "membership_type": "Weekender",
-        "cost": 80,
-        "payment_type": "Annual",
-        "join_date": "2024-12-20",
-        "schedule": {},
-        "activity": "N/A",
-        "expertise": "N/A",
-        "role": "N/A",
-        "loyalty_points": 0
-    },
-    {
-        "member_id": "be006294",
-        "name": "Poly Peas",
-        "user_type": "Gym User",
-        "gym_id": "c5d3ca4b",
-        "gym_name": "St Mary's Richmond Hill",
-        "city": "Wales",
-        "membership_type": "Premium",
-        "cost": 350,
-        "payment_type": "Annual",
-        "join_date": "2024-12-19",
-        "schedule": {},
-        "activity": "N/A",
-        "expertise": "N/A",
-        "role": "N/A",
-        "loyalty_points": 0
-    },
-    {
         "member_id": "6dd988e5",
         "name": "Poly Brums",
         "user_type": "Gym User",
@@ -557,5 +379,132 @@
         "expertise": "N/A",
         "role": "N/A",
         "loyalty_points": 10
+    },
+    {
+        "member_id": "e8cbc375",
+        "name": "Choe Lhera",
+        "user_type": "Wellbeing Staff",
+        "gym_id": "6b65ee95",
+        "gym_name": "St Mary's Fitness Twickenham",
+        "city": "London",
+        "membership_type": "N/A",
+        "cost": 4500,
+        "payment_type": "N/A",
+        "join_date": "N/A",
+        "schedule": {
+            "Monday": [],
+            "Tuesday": [],
+            "Wednesday": [],
+            "Thursday": [
+                {
+                    "start_time": "10:00",
+                    "end_time": "18:00"
+                }
+            ],
+            "Friday": [
+                {
+                    "start_time": "10:00",
+                    "end_time": "18:00"
+                }
+            ],
+            "Saturday": [
+                {
+                    "start_time": "10:00",
+                    "end_time": "18:00"
+                }
+            ],
+            "Sunday": []
+        },
+        "activity": "Nutrition",
+        "expertise": "N/A",
+        "role": "N/A",
+        "loyalty_points": 0
+    },
+    {
+        "member_id": "47e0dc36",
+        "name": "Bayne Bro",
+        "user_type": "Training Staff",
+        "gym_id": "b65313d3",
+        "gym_name": "St Mary's Ham",
+        "city": "London",
+        "membership_type": "N/A",
+        "cost": 4000,
+        "payment_type": "N/A",
+        "join_date": "N/A",
+        "schedule": {
+            "Monday": [],
+            "Tuesday": [
+                {
+                    "start_time": "09:00",
+                    "end_time": "15:00"
+                }
+            ],
+            "Wednesday": [
+                {
+                    "start_time": "13:00",
+                    "end_time": "17:00"
+                }
+            ],
+            "Thursday": [],
+            "Friday": [],
+            "Saturday": [],
+            "Sunday": []
+        },
+        "activity": "N/A",
+        "expertise": "BJJ",
+        "role": "N/A",
+        "loyalty_points": 0
+    },
+    {
+        "member_id": "51ae9392",
+        "name": "Bram Stark",
+        "user_type": "Gym User",
+        "gym_id": "b65313d3",
+        "gym_name": "St Mary's Ham",
+        "city": "London",
+        "membership_type": "Premium",
+        "cost": 350,
+        "payment_type": "Annual",
+        "join_date": "2024-12-20",
+        "schedule": {},
+        "activity": "N/A",
+        "expertise": "N/A",
+        "role": "N/A",
+        "loyalty_points": 10
+    },
+    {
+        "member_id": "aa10358d",
+        "name": "Lorata Dinah",
+        "user_type": "Training Staff",
+        "gym_id": "b65313d3",
+        "gym_name": "St Mary's Ham",
+        "city": "London",
+        "membership_type": "N/A",
+        "cost": 4000,
+        "payment_type": "N/A",
+        "join_date": "N/A",
+        "schedule": {
+            "Monday": [],
+            "Tuesday": [],
+            "Wednesday": [
+                {
+                    "start_time": "09:00",
+                    "end_time": "15:30"
+                }
+            ],
+            "Thursday": [],
+            "Friday": [
+                {
+                    "start_time": "11:30",
+                    "end_time": "17:30"
+                }
+            ],
+            "Saturday": [],
+            "Sunday": []
+        },
+        "activity": "N/A",
+        "expertise": "Gravity Defier",
+        "role": "N/A",
+        "loyalty_points": 0
     }
 ]

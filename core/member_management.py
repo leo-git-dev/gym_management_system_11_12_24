@@ -1,4 +1,4 @@
-from utils.helpers import generate_unique_id, validate_payment_type
+from utils.helpers import generate_unique_id, validate_payment_type, determine_payment_type
 from database.data_loader import DataLoader
 from core.gym_management import GymManager
 import os
@@ -71,6 +71,9 @@ class MemberManagement:
         if not gym:
             raise ValueError("Invalid gym ID provided.")
 
+        # Determine final payment type using the helper
+        final_payment_type = determine_payment_type(user_type, payment_type)
+
         # Generate a unique member ID
         new_member_id = generate_unique_id(members, key="member_id")
 
@@ -84,7 +87,7 @@ class MemberManagement:
             "city": gym["city"],
             "membership_type": kwargs.get("membership_type", "N/A"),
             "cost": kwargs.get("cost", 0),
-            "payment_type": payment_type,
+            "payment_type": final_payment_type,
             "join_date": kwargs.get("join_date", "N/A"),
             "schedule": kwargs.get("schedule", {}),
             "activity": kwargs.get("activity", "N/A"),
@@ -97,11 +100,6 @@ class MemberManagement:
         handler = USER_TYPE_HANDLERS.get(user_type)
         if handler:
             handler.configure_member(new_member, kwargs)
-
-        # For Gym Users or other user types not in handlers, no special configuration is needed.
-        # If you had another user type like "Gym User", you can either:
-        # 1) Add a GymUserHandler, or
-        # 2) Just let it pass through since no special logic is required.
 
         members.append(new_member)
         DataLoader.save_data("members", members)

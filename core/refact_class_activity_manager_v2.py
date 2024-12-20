@@ -392,31 +392,46 @@ class ClassManagementApp(ttk.Frame):
             return
 
         schedules = ClassActivityManager.get_trainer_schedule(trainer_id)
+        logger.debug(f"Schedules retrieved for trainer '{trainer_id}': {schedules}")
 
+        # Clear existing schedule entries
         for row in self.trainer_schedule_tree.get_children():
             self.trainer_schedule_tree.delete(row)
 
+        # Populate the trainer schedule table
         for sched in schedules:
             try:
-                formatted_sched = self.format_schedule_for_display(sched)
+                # Determine if sched is a dict or an object
+                if isinstance(sched, dict):
+                    schedule_dict = sched
+                else:
+                    # Assuming sched has a 'schedule' attribute
+                    schedule_dict = sched.schedule
+
+                formatted_sched = self.format_schedule_for_display(schedule_dict)
                 self.trainer_schedule_tree.insert("", "end", values=(formatted_sched,))
+            except AttributeError as ae:
+                logger.error(f"AttributeError: {ae} - Skipping this schedule entry.")
+                continue
             except Exception as e:
                 logger.error(f"Failed to format schedule for display: {e}")
                 continue
-        logger.debug(f"Trainer schedule updated for trainer '{trainer_id}': {schedules}")
 
-    def format_schedule_for_display(self, schedule_list):
+        logger.debug(f"Trainer schedule updated for trainer '{trainer_id}'.")
+
+    def format_schedule_for_display(self, schedule_dict):
         """
-        Format the schedule list into a readable string.
+        Format the schedule dictionary into a readable string.
         """
         schedule_str = ""
-        for sched in schedule_list:
-            if not isinstance(sched, dict):
-                logger.error(f"Expected schedule to be a dict, got {type(sched)} instead.")
-                continue
-            for day, times in sched.items():
-                times_formatted = ", ".join(times)
-                schedule_str += f"{day}: {times_formatted}\n"
+        if not isinstance(schedule_dict, dict):
+            logger.error(f"Expected schedule to be a dict, got {type(schedule_dict)} instead.")
+            return schedule_str  # Return empty string if not a dict
+
+        for day, times in schedule_dict.items():
+            times_formatted = ", ".join(times)
+            schedule_str += f"{day}: {times_formatted}\n"
+
         return schedule_str.strip()
 
     def add_schedule_row(self):

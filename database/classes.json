@@ -291,5 +291,62 @@
                 "time": "13:00-14:00"
             }
         ]
+    },
+    {
+        "class_id": "a1829fd8",
+        "class_name": "Pilates",
+        "trainer_id": "a3188a80",
+        "trainer_name": "Loas Jones",
+        "gym_id": "c5d3ca4b",
+        "gym_name": "St Mary's Richmond Hill",
+        "schedule": {
+            "Tuesday": [
+                "22:00-23:00"
+            ],
+            "Thursday": [
+                "13:00-14:00"
+            ],
+            "Friday": [
+                "10:00-11:00"
+            ]
+        },
+        "capacity": 5,
+        "registered_users": []
+    },
+    {
+        "class_id": "9053b699",
+        "class_name": "Chess",
+        "trainer_id": "aa10358d",
+        "trainer_name": "Lorata Dinah",
+        "gym_id": "b65313d3",
+        "gym_name": "St Mary's Ham",
+        "schedule": {
+            "Wednesday": [
+                "09:00-10:00"
+            ],
+            "Thursday": [
+                "11:00-12:00"
+            ]
+        },
+        "capacity": 5,
+        "registered_users": []
+    },
+    {
+        "class_id": "87dbbedf",
+        "class_name": "Croquet",
+        "trainer_id": "aa10358d",
+        "trainer_name": "Lorata Dinah",
+        "gym_id": "b65313d3",
+        "gym_name": "St Mary's Ham",
+        "schedule": {
+            "Tuesday": [
+                "08:00-09:00"
+            ],
+            "Monday": [
+                "09:00-10:00"
+            ]
+        },
+        "capacity": 5,
+        "registered_users": []
     }
 ]

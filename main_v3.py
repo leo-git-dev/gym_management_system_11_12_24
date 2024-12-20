@@ -249,7 +249,7 @@ class GymManagementSystem(tk.Tk):
             self.notebook.add(self.class_management_frame, text="Class Management")
             self.notebook.add(self.registration_frame, text="Registration Management")
             self.notebook.add(self.appointment_management_frame, text="Appointment Management")
-            self.notebook.add(self.payment_management_frame, text="Payment Management")  # Assuming staff can view payments
+            self.notebook.add(self.payment_management_frame, text="Payment Management")
             self.health_condition_frame = HealthConditionFrame(self.notebook)
             self.notebook.add(self.health_condition_frame, text="Health Condition")
 

@@ -1,5 +1,4 @@
 # core/refact_user_manager_v2.py
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkcalendar import Calendar

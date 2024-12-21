@@ -1,6 +1,7 @@
 import csv
 import json
 
+
 class FileHandler:
     @staticmethod
     def read_csv(filepath):

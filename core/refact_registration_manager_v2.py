@@ -7,6 +7,7 @@ from core.gym_management import GymManager
 import logging
 import re
 
+
 # Configure logging with debug level for detailed output
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)

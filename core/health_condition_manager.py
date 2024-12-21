@@ -3,6 +3,7 @@ import json
 import os
 from cryptography.fernet import Fernet
 
+
 HEALTH_DATA_FILE = "health_data.json"
 # In a real environment, store this key securely and do not hard-code
 ENCRYPTION_KEY = Fernet.generate_key()

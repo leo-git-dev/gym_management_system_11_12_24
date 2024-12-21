@@ -9,6 +9,7 @@ import pandas as pd
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+
 class ReportManagementFrame(ttk.Frame):
     def __init__(self, parent, data_loader, reports_dir="../gym_management_system/reports"):
         super().__init__(parent)

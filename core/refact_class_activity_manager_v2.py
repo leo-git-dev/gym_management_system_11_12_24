@@ -6,6 +6,7 @@ from core.member_management import MemberManagement
 import logging
 import re
 
+
 # Define constants for days and time slots
 DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 TIME_SLOTS = [

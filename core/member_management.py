@@ -3,6 +3,7 @@ from database.data_loader import DataLoader
 from core.gym_management import GymManager
 import os
 import logging
+
 from tkinter import messagebox  # Ensure messagebox is imported
 
 # Ensure log directory exists

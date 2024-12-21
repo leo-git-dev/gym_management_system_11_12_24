@@ -3,7 +3,6 @@ from database.data_loader import DataLoader
 from core.member_management import MemberManagement
 # Removed the top-level import of GymManager to prevent circular import
 
-
 class AppointmentManager:
     @staticmethod
     def schedule_appointment(member_id, trainer_id, date, time, cost, status):

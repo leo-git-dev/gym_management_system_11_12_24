@@ -12,3 +12,4 @@ class WorkoutZone:
 
     def update_schedule(self, day, time_slot):
         self.schedule[day] = time_slot
+

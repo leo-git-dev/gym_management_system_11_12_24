@@ -1,5 +1,4 @@
 # database/data_loader.py
-
 import json
 import os
 import logging

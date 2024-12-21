@@ -8,6 +8,7 @@ from core.health_condition_manager import HealthConditionManager
 import math
 
 
+
 class HealthConditionFrame(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)

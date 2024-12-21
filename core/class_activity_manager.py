@@ -1,6 +1,5 @@
 # core/class_activity_manager.py
 # core/class_activity_manager.py
-
 import os
 import logging
 from utils.helpers import generate_unique_id

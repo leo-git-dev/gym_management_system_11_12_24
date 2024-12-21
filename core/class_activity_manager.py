@@ -8,6 +8,7 @@ from core.member_management import MemberManagement
 from core.gym_management import GymManager
 import re
 
+
 # Ensure log directory exists
 log_directory = 'logs'
 if not os.path.exists(log_directory):

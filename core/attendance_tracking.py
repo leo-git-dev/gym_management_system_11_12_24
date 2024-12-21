@@ -5,6 +5,7 @@ from database.data_loader import DataLoader
 from datetime import datetime
 
 
+
 class AttendanceManager:
     @staticmethod
     def add_attendance(class_id, user_id, date=None):

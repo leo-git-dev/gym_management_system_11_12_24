@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 from core.gym_management import GymManager
 import re
 
+
 def is_valid_zone_name(zone_name):
     """Validate the zone name."""
     if len(zone_name) < 3 or len(zone_name) > 30:

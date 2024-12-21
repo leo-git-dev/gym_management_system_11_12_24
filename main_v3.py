@@ -11,7 +11,6 @@ from core.refact_health_condition_manager_v2 import HealthConditionFrame
 from reports.refact_report_manager_v2 import ReportManagementFrame
 import os
 
-
 # Define Admin and Staff Credentials
 ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "admin123"

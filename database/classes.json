@@ -347,6 +347,12 @@
             ]
         },
         "capacity": 5,
-        "registered_users": []
+        "registered_users": [
+            {
+                "member_id": "51ae9392",
+                "day": "Monday",
+                "time": "09:00-10:00"
+            }
+        ]
     }
 ]
